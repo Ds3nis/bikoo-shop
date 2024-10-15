@@ -9,6 +9,7 @@
 
 # Ignore .osp directory
 /.osp/
+/.osp/.ini
 
 # IntelliJ IDEA files
 *.iml
