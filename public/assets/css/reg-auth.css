@@ -1,0 +1,223 @@
+.autorisation {
+}
+.container {
+}
+.authorisation__container {
+}
+.account-holder {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 5%;
+    justify-content: space-between;
+}
+.account-holder__left {
+    width: 40%;
+}
+.authorisation__left {
+}
+.account-holder__title {
+    text-align: center;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #ea0129;
+    position: relative;
+    margin-bottom: 56px;
+}
+.form-container {
+}
+.form-fields {
+}
+.input-container {
+    width: 100%;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.input-container input {
+    width: 100%;
+    background-color: white;
+    border: none;
+    outline: none;
+    height: 50px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease-in-out;
+    display: block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-clip: padding-box;
+    border-bottom: 2px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.input-container input:hover {
+    background-color: #f2f2f2;
+}
+
+/* Optional: Animation on focus */
+@keyframes input-focus {
+    from {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+    }
+
+    to {
+        transform: scale(1.02);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.input-container input:is(:focus, :valid) {
+    color: red;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    animation: input-focus 0.3s ease;
+}
+
+.highlight {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ea0129;
+    transition: width 0.3s ease;
+}
+
+.input-container input:focus + .highlight {
+    width: 100%;
+}
+
+.form__link {
+    color: #0d0d0d;
+    transition: color 0.3s ease;
+}
+
+.form__link:hover {
+    color: #ea0129;
+    text-decoration: underline;
+}
+
+.form__link-pass {
+}
+.form__button {
+    margin: 17px 0px 28px 0px;
+    width: 100%;
+    border: none;
+}
+
+.cloud-btn__item--redblack {
+    background-color: #ea0129;
+    width: 100%;
+    min-width: 200px;
+    color: white;
+}
+
+.cloud-btn__item--redblack span {
+    background: black !important;
+}
+
+.form__link-text {
+}
+.account-holder__right {
+    flex: 1;
+    position: relative;
+    max-width: 680px;
+}
+
+.account-holder__img {
+    width: 100%;
+    height: 800px;
+    display: block;
+    object-fit: cover;
+}
+
+.account-holder__desc {
+    position: absolute;
+    font-size: 50px;
+    left: 50%;
+    top: 50%;
+    margin: 0;
+    color: #fff;
+    font-weight: 700;
+}
+
+.form__link-text span {
+    text-decoration: underline;
+}
+
+@media (max-width: 1155px) {
+    .account-holder__left {
+        padding: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .account-holder {
+        flex-direction: column;
+        margin-top: 30px;
+    }
+    .account-holder__left {
+        width: 60%;
+        order: 1;
+    }
+
+    .account-holder__right {
+        width: 100%;
+        order: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .account-holder__img {
+        width: 90%;
+        display: block;
+        height: auto;
+        object-fit: cover;
+    }
+    .account-holder__title {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 662px) {
+    .account-holder__left {
+        width: 90%;
+        order: 1;
+    }
+
+    .account-holder__right {
+        width: 100%;
+    }
+
+    .account-holder__img {
+        width: 100%;
+        display: block;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .account-holder__desc {
+        font-size: 30px;
+    }
+
+    .account-holder__title {
+        margin-bottom: 20px;
+    }
+
+    .input-container {
+        margin-bottom: 0.5rem;
+    }
+
+    .form__button {
+        margin: 5px 0 5px 0px;
+    }
+}
