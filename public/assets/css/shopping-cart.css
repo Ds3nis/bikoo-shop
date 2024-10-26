@@ -1,0 +1,84 @@
+.ui-w-40 {
+  width: 40px !important;
+  height: auto;
+}
+
+.card {
+  box-shadow: 0 1px 15px 1px rgba(52, 40, 104, 0.08);
+}
+
+.ui-product-color {
+  display: inline-block;
+  overflow: hidden;
+  margin: 0.144em;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 10rem;
+  -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset;
+  vertical-align: middle;
+}
+
+.cart-container {
+  width: 195px;
+}
+
+.cart-quantity input {
+  border: none;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  width: 42%;
+  color: #0d0d0d !important;
+  padding: 0;
+}
+
+.cart-quantity button:hover {
+  background-color: #0d0d0d;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.cart-quantity {
+  border: 1px solid #0d0d0d;
+  width: 85%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.cart-quantity button {
+  color: #0d0d0d;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  height: 41px;
+  line-height: 40px;
+  border-radius: 0px;
+  width: 43px;
+  padding: 0;
+  background-color: white;
+}
+
+.cart-quantity button:active {
+  background-color: #333;
+}
+
+
+.cloud-btn__item--black {
+  width: 211px;
+  height: 50px;
+  background-color: #0d0d0d;
+  color: #fff;
+}
+
+.cloud-btn__item--spray {
+  width: 250px;
+  height: 50px;
+  background-color: #dbdbdb;
+  color: #0d0d0d;
+}

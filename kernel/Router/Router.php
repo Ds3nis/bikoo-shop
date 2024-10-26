@@ -2,17 +2,29 @@
 
 namespace App\Kernel\Router;
 
+use App\Kernel\Http\Redirect;
+use App\Kernel\Http\RedirectInterface;
 use App\Kernel\Http\Request;
+use App\Kernel\Http\RequestInterface;
+use App\Kernel\Session\Session;
+use App\Kernel\Session\SessionInterface;
 use App\Kernel\View\View;
+use App\Kernel\Router\RouterInterface;
+use App\Kernel\View\ViewInterface;
 
-class Router
+class Router implements RouterInterface
 {
 
     private array $routes = [
         "GET" => [],
         "POST" => []
     ];
-    public function __construct(private View $view, private Request $request){
+    public function __construct(
+        private ViewInterface $view,
+        private RequestInterface $request,
+        private RedirectInterface $redirect,
+        private SessionInterface  $session
+    ){
         $this->initRoutes();
     }
 
@@ -39,6 +51,8 @@ class Router
             if ($controller && method_exists($controller, "setView")) {
                 call_user_func([$controller, "setView"], $this->view);
                 call_user_func([$controller , "setRequest"],$this->request);
+                call_user_func([$controller, "setRedirect"], $this->redirect);
+                call_user_func([$controller, "setSession"], $this->session);
             }
 
 
@@ -74,7 +88,7 @@ class Router
 
     }
 
-    public function getRoutes(){
+    private function getRoutes() : array{
         return require_once (APP_PATH . "/config/routes.php");
     }
 }

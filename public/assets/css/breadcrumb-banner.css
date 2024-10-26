@@ -1,0 +1,75 @@
+.breadcrumb-banner {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  max-height: 400px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.breadcrumb-banner--cart {
+  background-image: url(../img/view-cart-banner.png);
+}
+
+.breadcrumb-banner--profile {
+  background-image: url(../img/profile-banner.png);
+}
+
+.breadcrumb-banner--products {
+  background-image: url(../img/products-banner.png);
+}
+
+.breadcrumb__container {
+}
+
+.breadcrumb__content {
+}
+
+.breadcrumb__title {
+  font-size: 36px;
+  color: #f9f9f9;
+  line-height: 48px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.breadcrumb__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding-left: 0;
+}
+
+.breadcrumb__link {
+  transition: color 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.breadcrumb__item {
+  font-size: 24px;
+  text-transform: uppercase;
+  line-height: 48px;
+  font-weight: 500;
+}
+
+.breadcrumb__link:hover {
+  color: #df0f2b;
+}
+
+.spacer {
+  font-size: 24px;
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 48px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb-banner--contacts {
+  background-image: url(../img/contacts-banner.png);
+}

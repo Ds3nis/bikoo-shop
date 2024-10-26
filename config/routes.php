@@ -1,7 +1,6 @@
 
 
 <?php
-
 use App\Controllers\Home\IndexController;
 use App\Controllers\User\Registration\StoreRegistrationController;
 use App\Kernel\Router\Route;

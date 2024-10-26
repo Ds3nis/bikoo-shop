@@ -1,9 +1,12 @@
 <?php
 /**
  * @var \App\Kernel\View\View $view
+ * @var \App\Kernel\Session\Session $session
  */
 ?>
 <?php
+session_start();
+//dd($session);
 $view->include("main");
 ?>
 <div class="content-header">
@@ -37,7 +40,15 @@ $view->include("main");
                             <input type="text" class="form-control" name="title" id="title"
                                    placeholder="Zadejte název" value="">
 
-                            <div class="text-danger">{{$message}}</div>
+                            <?php if($session->has("title")) { ?>
+                            <div class="text-danger">
+                                <ul>
+                                    <?php foreach ($session->getFlash("title") as $error) { ?>
+                                    <li style="color: red"><?php echo  $error ?></li>
+                                    <?php  } ?>
+                                </ul>
+                            </div>
+                            <?php  }?>
 
                         </div>
                         <div class="form-group">
