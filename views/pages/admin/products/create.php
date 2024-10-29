@@ -17,7 +17,7 @@ $view->include("main");
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="admin">Hlavní</a></li>
+                    <li class="breadcrumb-item"><a href="/admin">Hlavní</a></li>
                     <li class="breadcrumb-item active">Produkty</li>
                 </ol>
             </div><!-- /.col -->
@@ -98,13 +98,7 @@ $view->include("main");
                         </div>
                         <div class="form-group">
                             <label for="summernote">Obsah</label>
-                            <textarea name="description" id="summernote">{{old("content")}}</textarea>
-                            <div class="text-danger">{{$message}}</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="brand">Značka</label>
-                            <input type="text" class="form-control" name="brand" id="brand"
-                                   placeholder="Zadejte značku" value="">
+                            <textarea name="description" id="summernote"></textarea>
                             <div class="text-danger">{{$message}}</div>
                         </div>
                         <div class="card">

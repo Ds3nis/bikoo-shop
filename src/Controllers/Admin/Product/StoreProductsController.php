@@ -25,7 +25,18 @@ class StoreProductsController extends Controller
             $this->redirect($url);
         }
 
-        dd("valdation passed");
+
+        $id = $this->db()->insert("produkt", [
+            "nazev" => $this->request()->input("title"),
+            "kod" => $this->request()->input("code"),
+            "cena" => $this->request()->input("price"),
+            "popis" => $this->request()->input("description"),
+            "dostupnost" => $this->request()->input("is_available"),
+            "mnozstvi" => $this->request()->input("quantity"),
+        ]);
+
+        
+        dd($id);
 
     }
 }

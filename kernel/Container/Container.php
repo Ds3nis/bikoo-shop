@@ -2,6 +2,8 @@
 
 namespace App\Kernel\Container;
 
+use App\Kernel\Auth\Auth;
+use App\Kernel\Auth\AuthInterface;
 use App\Kernel\Config\Config;
 use App\Kernel\Config\ConfigInterface;
 use App\Kernel\Database\Database;
@@ -32,6 +34,7 @@ class Container
     public readonly SessionInterface  $session;
 
     public readonly ValidatorInterface $validator;
+    public readonly AuthInterface $auth;
 
     public readonly ViewInterface $view;
     public function __construct(){
@@ -39,14 +42,22 @@ class Container
     }
     private function registerServices(){
         $this->request = Request::createFromGlobals();
-        $this->validator = new Validator();
         $this->redirect = new Redirect();
         $this->session = new Session();
-        $this->request->setValidator($this->validator);
         $this->config = new Config();
         $this->database = new Database($this->config);
+        $this->validator = new Validator($this->database);
         $this->view = new View($this->session);
-        $this->router = new Router($this->view, $this->request, $this->redirect, $this->session, $this->database);
+        $this->request->setValidator($this->validator);
+        $this->auth = new Auth($this->database, $this->session, $this->config);
+        $this->router = new Router(
+            $this->view,
+            $this->request,
+            $this->redirect,
+            $this->session,
+            $this->database,
+            $this->auth
+        );
 
     }
 }

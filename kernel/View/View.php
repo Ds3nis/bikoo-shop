@@ -35,7 +35,10 @@ class View implements ViewInterface
     public function component(string $name){
 
         $componentPath =  APP_PATH . "/views/components/$name.php";
-
+        extract([
+            'view' => $this,
+            'session' => $this->session
+        ]);
         if (!file_exists($componentPath)){
             echo "Component $name not found";
             return;

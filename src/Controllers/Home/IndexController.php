@@ -8,6 +8,7 @@ class IndexController extends Controller
 {
 
     public function index(){
+//        dd($this->db());
         $this->view("home");
     }
 }

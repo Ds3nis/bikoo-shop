@@ -2,17 +2,25 @@
 
 namespace App\Kernel\Validator;
 
+use App\Kernel\Database\DatabaseInterface;
+
 class Validator implements ValidatorInterface
 {
     private array $errors;
+
+    public function __construct(private DatabaseInterface $db){
+
+    }
     public function validate(array $data, array $rules): bool
     {
         $this->errors = [];
 //        dd($data, $rules);
+
         foreach ($rules as $field => $fieldRules) {
-            $rules = explode('|', $fieldRules[0]);
+            $rules = explode('|', $fieldRules);
             $value = $data[$field] ?? null;
-            $fieldErrors = $this->validateRules($value, $rules);
+
+            $fieldErrors = $this->validateRules($field, $value, $rules);
             if (!empty($fieldErrors)) {
                 $this->errors[$field] = $fieldErrors;
             }
@@ -24,10 +32,10 @@ class Validator implements ValidatorInterface
         return $this->errors;
     }
 
-    private function validateRules(string $value, array $rules): array
+    private function validateRules(string $field, ?string $value, array $rules): array
     {
+
         $errors = [];
-//        dd($value, $rules);
         foreach ($rules as $rule) {
             // Kontrola, zda pravidlo má další parametry (např. min:3)
             if (strpos($rule, ':') !== false) {
@@ -84,33 +92,27 @@ class Validator implements ValidatorInterface
                     }
                     break;
 
-                case 'boolean':
-                    if (!is_bool(filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE))) {
-                        $errors[] = 'Toto pole musí být true nebo false.';
+                case 'unique':
+                    if (!$this->db->isUnique('zakaznik', $field, $value)) {
+                        $errors[] = 'Hodnota musí být unikátní.';
                     }
                     break;
 
-                case 'url':
-                    if (!filter_var($value, FILTER_VALIDATE_URL)) {
-                        $errors[] = 'Neplatný formát URL.';
+                case 'regex':
+                    if (!preg_match("/$ruleValue/", $value)) {
+                        $errors[] = 'Hodnota neodpovídá požadovanému formátu.';
                     }
                     break;
 
-                case 'in':
-                    $allowedValues = explode(',', $ruleValue);
-                    if (!in_array($value, $allowedValues)) {
-                        $errors[] = 'Hodnota musí být jedna z: ' . implode(', ', $allowedValues) . '.';
-                    }
-                    break;
-
-                case 'date':
-                    if (!strtotime($value)) {
-                        $errors[] = 'Neplatný formát data.';
+                case 'password_confirm':
+                    if ($value !== ($_POST["password"] ?? null)) {
+                        $errors[] = 'Hesla se neshodují.';
                     }
                     break;
 
                 default:
                     $errors[] = "Neznámé pravidlo: $ruleName";
+                    break;
             }
         }
             return $errors;

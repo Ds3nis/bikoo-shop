@@ -19,11 +19,16 @@ use App\Controllers\Admin\Product\ShowProductsController;
 use App\Controllers\Admin\Product\EditProductsController;
 use App\Controllers\Admin\Product\DeleteProductsController;
 use App\Controllers\Admin\Product\UpdateProductsController;
+use App\Controllers\User\Authorisation\IndexAuthorisationController;
+use App\Controllers\User\Authorisation\StoreAuthorisationController;
 
 return [
         Route::get("/", [IndexController::class, "index"]),
         Route::get("/registration",  [IndexRagistrationController::class, "index"]),
-        Route::post("/registration/store",  [StoreRegistrationController::class, "add"]),
+        Route::post("/registration",  [StoreRegistrationController::class, "store"]),
+
+        Route::get("/authorisation",  [IndexAuthorisationController::class, "index"]),
+        Route::post("/authorisation",  [StoreAuthorisationController::class, "store"]),
 
 
 
