@@ -3,11 +3,7 @@
  * @var \App\Kernel\View\View $view
  */
 ?>
-
-<!DOCTYPE html>
-
 <?php $view->component("head"); ?>
-<html lang="en">
   <body>
     <div class="wrapper">
         <?php $view->component("header") ?>

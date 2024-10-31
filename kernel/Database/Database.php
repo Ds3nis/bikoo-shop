@@ -23,17 +23,23 @@ class Database implements DatabaseInterface
         $binds = implode(", ", array_map(fn($field) => ":$field", $fields));
 
         $sql = "INSERT INTO $table ($columns) VALUES ($binds)";
-
+//        dd($sql);
         $stmt = $this->pdo->prepare($sql);
 
         try {
             $stmt->execute($data);
+            return [
+                'success' => true,
+                'id' => (int) $this->pdo->lastInsertId(),
+                'message' => 'Data inserted successfully.',
+            ];
         }catch (\PDOException $exception){
-            dd($exception);
-            return false;
+            return [
+                'success' => false,
+                'message' => 'Database error: ' . $exception->getMessage(),
+            ];
         }
 
-        return (int) $this->pdo->lastInsertId();
 
     }
 
@@ -94,5 +100,42 @@ class Database implements DatabaseInterface
         }
 
 
+    }
+
+    public function get(string $table, array $conditions = []): ?array
+    {
+        $where = '';
+
+        if(!empty($conditions)){
+            $where = 'WHERE ' . implode(" AND ", array_map(fn($field) => "$field = :$field", array_keys($conditions)));
+        }
+
+        $sql = "SELECT * FROM $table $where";
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute($conditions);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+
+    }
+
+    public function update(string $table, array $data, array $conditions = []): void
+    {
+        $fields = array_keys($data);
+
+        $set = implode(", ", array_map(fn ($field) => "$field = :$field" , $fields));
+
+        $where = '';
+
+        if(!empty($conditions)){
+            $where = 'WHERE ' . implode(" AND ", array_map(fn($field) => "$field = :$field", array_keys($conditions)));
+        }
+
+        $sql = "UPDATE $table SET $set $where";
+//        dd($sql);
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute(array_merge($data, $conditions));
     }
 }

@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 /**
  * @var \App\Kernel\Session\SessionInterface $session
@@ -8,6 +6,7 @@
 ?>
 <?php
 $view->component("head");
+
 ?>
 <body>
 <div class="wrapper">
@@ -22,9 +21,9 @@ $view->component("head");
                         </div>
                         <form class="form-container" action="/authorisation" method="post">
                             <div class="form-fields">
-                                <?php if($session->has("surname")) { ?>
-                                    <div class="text-danger">
-                                        <p><?php echo $session->getFlash("surname")?></p>
+                                <?php if($session->has("login-error")) { ?>
+                                    <div class="text-danger" style="color: red; margin: 10px 0;">
+                                        <p><?php echo $session->getFlash("login-error")?></p>
                                     </div>
                                 <?php  }?>
                                 <div class="input-container">

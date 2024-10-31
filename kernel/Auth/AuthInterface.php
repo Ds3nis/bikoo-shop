@@ -10,7 +10,7 @@ interface AuthInterface
 
     public function logout() : void;
 
-    public function user() : ?array;
+    public function user() : ?User;
 
     public function table() : string;
 

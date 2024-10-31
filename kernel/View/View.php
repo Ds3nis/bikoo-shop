@@ -2,6 +2,7 @@
 
 namespace App\Kernel\View;
 
+use App\Kernel\Auth\AuthInterface;
 use App\Kernel\Exceptions\ViewNotFoundException;
 use App\Kernel\Session\Session;
 use App\Kernel\Session\SessionInterface;
@@ -10,16 +11,17 @@ use App\Kernel\Session\SessionInterface;
 class View implements ViewInterface
 {
 
-    public function __construct(private SessionInterface $session){
+    public function __construct(private SessionInterface $session, private AuthInterface $auth){
 
     }
 
-    public function page(string $name){
+    public function page(string $name, array $data = []){
 
-        extract([
+        extract(array_merge([
             'view' => $this,
-            'session' => $this->session
-        ]);
+            'session' => $this->session,
+            'auth' => $this->auth,
+        ], $data));
 
         $viewPath =  APP_PATH . "/views/pages/$name.php";
 
@@ -32,18 +34,19 @@ class View implements ViewInterface
 
     }
 
-    public function component(string $name){
-
+    public function component(string $name, array $info = []){
         $componentPath =  APP_PATH . "/views/components/$name.php";
-        extract([
+        extract(array_merge([
             'view' => $this,
-            'session' => $this->session
-        ]);
+            'session' => $this->session,
+            'auth' => $this->auth,
+        ], $info));
+
         if (!file_exists($componentPath)){
             echo "Component $name not found";
             return;
         }else{
-            include_once ($componentPath);
+            include ($componentPath);
 
         }
 
@@ -56,10 +59,15 @@ class View implements ViewInterface
         ];
     }
 
-    public function include(string $name){
+    public function include(string $name, array $data = []){
 
         $componentPath =  APP_PATH . "/views/pages/admin/includes/$name.php";
 /*     dd($componentPath);*/
+        extract(array_merge([
+            'view' => $this,
+            'session' => $this->session,
+            'auth' => $this->auth,
+        ], $data));
         if (!file_exists($componentPath)){
             echo "Component $name not found";
             return;

@@ -1,0 +1,32 @@
+.custom-file-input-list {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.custom-file-input-list li {
+    position: relative;
+    padding: 5px;
+    background-color: #1992a2;
+    border-radius: 5px;
+    margin-left: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.custom-file-input-list li:hover {
+    background-color: #ff4c4c;
+}
+
+.custom-file-input-list li img {
+    width: 60px; /* Розмір для прев'ю */
+    height: 60px;
+    object-fit: cover; /* Щоб зображення не виходили за межі */
+    border-radius: 4px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+

@@ -1,6 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="en">
 <?php
 /**
  * @var \App\Kernel\Session\SessionInterface $session
@@ -136,8 +134,8 @@ $view->component("head");
                                         name="phone"
                                         required
                                         placeholder="Zadejte telefonní číslo"
-                                        pattern="\+420[0-9]{9}$"
-                                        title="Zadejte telefonní číslo ve formátu +420 a 9 číslic, například +420123456789"
+                                        pattern="\420[0-9]{9}$"
+                                        title="Zadejte telefonní číslo ve formátu 420 a 9 číslic, například +420123456789"
                                     />
                                     <div class="highlight"></div>
                                 </div>
@@ -150,9 +148,6 @@ $view->component("head");
                                         </ul>
                                     </div>
                                 <?php  }?>
-                                <a href="#" class="form__link">
-                                    <p class="form__link-pass">Zapomněli jste heslo?</p>
-                                </a>
                                 <button class="form__button cloud-btn" type="submit">
                                     <nav>
                                         <ul class="cloud-btn__list">

@@ -10,7 +10,14 @@ class StoreAuthorisationController extends  Controller
         $email = $this->request()->input("email");
         $password = $this->request()->input("password");
 
-        dd($this->auth()->attempt($email, $password));
+        if ( $this->auth()->attempt($email, $password)){
+            $this->redirect("/profile");
+        }else{
+            $this->session()->set("login-error", "Nesprávný e-mail nebo heslo");
+            $this->redirect("/authorisation");
+        }
+
+
 
     }
 }

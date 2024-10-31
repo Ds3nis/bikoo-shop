@@ -634,7 +634,7 @@ svg {
     background-size: cover;
     overflow: hidden;
     position: relative;
-    margin-bottom: 200px;
+    margin-bottom: 20px;
 }
 
 .parallax:before {

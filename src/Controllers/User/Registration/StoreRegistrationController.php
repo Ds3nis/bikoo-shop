@@ -10,13 +10,14 @@ class StoreRegistrationController extends Controller
     public function store():void{
 
         $validate = $this->request()->validate([
-           "name" => "required|min:3",
-            "last_name" => "required|min:3",
-            "email" => "required|email|unique:zakaznik",
+           "name" => "required|min:3|max:45",
+            "last_name" => "required|min:3|max:45",
+            "email" => "required|email|unique:zakaznik|max:100",
             "password" => "required|min:1",
-            "password_confirmation" => "required|min:1|password_confirm",
-            "phone" => "required"
+            "password_confirmation" => "required|min:1|password_confirm:password",
+            "phone" => "required|min:12|maxNumeric:12"
         ]);
+
 
         if (!$validate){
             $errors = $this->request()->errors();
@@ -36,7 +37,7 @@ class StoreRegistrationController extends Controller
                 "heslo" =>  password_hash($this->request()->input("password"), PASSWORD_DEFAULT)
             ]);
 
-            dd($id);
+            $this->redirect("/");
         }
 
 

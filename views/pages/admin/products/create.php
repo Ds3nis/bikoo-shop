@@ -63,7 +63,7 @@ $view->include("main");
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input"
-                                           id="exampleInputFile" name="image[]" multiple>
+                                           id="exampleInputFile" name="image[]"  multiple>
                                     <label class="custom-file-label" for="exampleInputFile">Vyberte
                                         obrázky</label>
                                 </div>

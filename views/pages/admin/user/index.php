@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\Kernel\View\View $view
+ * @var array<\App\Models\User> $users
  */
 ?>
 <?php
@@ -27,7 +28,7 @@ $view->include("main");
 <section class="content">
     <div class="container-fluid">
         <!-- Malé boxy (Stat box) -->
-        <div class="row">
+        <div class="row flex-column">
             <div class="col-1 mb-3">
                 <button class="btn btn-block btn-primary" style="min-width: 150px" data-toggle="modal" data-target="#exampleModal">Přidat
                 </button>
@@ -49,76 +50,88 @@ $view->include("main");
                                             <input type="text" value="" name="name"
                                                    class="form-control"
                                                    id="name"
+                                                   required
                                                    placeholder="Zadejte jméno">
                                         </div>
 
-                                        <span class="text-danger"></span>
+                                        <?php $view->component("errors", [
+                                            "sessionKey" => "name"
+                                        ]) ?>
 
                                         <div class="form-group">
                                             <label for="lastName">Příjmení</label>
                                             <input type="text" value="" name="last_name"
                                                    class="form-control"
                                                    id="lastName"
+                                                   required
                                                    placeholder="Zadejte příjmení">
                                         </div>
 
-                                        <span class="text-danger"> </span>
+                                        <?php $view->component("errors", [
+                                            "sessionKey" => "last_name"
+                                        ]) ?>
 
-                                        <div class="form-group">
-                                            <label for="middleName">Prostřední jméno</label>
-                                            <input type="text" name="middle_name" value=""
-                                                   class="form-control"
-                                                   id="middleName"
-                                                   placeholder="Zadejte prostřední jméno">
-                                        </div>
 
-                                        <span class="text-danger"> </span>
-
-                                        <div class="form-group">
-                                            <label for="address">Adresa</label>
-                                            <input type="text" value="" name="address"
-                                                   class="form-control"
-                                                   id="address"
-                                                   placeholder="Zadejte adresu">
-                                        </div>
-
-                                        <span class="text-danger"> </span>
+                                        <!--                                        <div class="form-group">-->
+                                        <!--                                            <label for="address">Adresa</label>-->
+                                        <!--                                            <input type="text" value="" name="address"-->
+                                        <!--                                                   class="form-control"-->
+                                        <!--                                                   id="address"-->
+                                        <!--                                                   placeholder="Zadejte adresu">-->
+                                        <!--                                        </div>-->
+                                        <!---->
+                                        <!--                                        <span class="text-danger"> </span>-->
 
                                         <div class="form-group">
                                             <label for="phone">Telefon</label>
-                                            <input type="tel" value="" name="phone"
+                                            <input type="tel"
+                                                   value=""
+                                                   name="phone"
                                                    class="form-control"
                                                    id="phone"
-                                                   placeholder="Zadejte telefonní číslo">
+                                                   required
+                                                   placeholder="Zadejte telefonní číslo"
+                                                   pattern="\420[0-9]{9}$"
+                                                   title="Zadejte telefonní číslo ve formátu 420 a 9 číslic, například +420123456789"
+                                            >
                                         </div>
 
-                                        <span class="text-danger"> </span>
+                                        <?php $view->component("errors", [
+                                            "sessionKey" => "phone"
+                                        ]) ?>
 
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" value="" name="email"
                                                    class="form-control"
                                                    id="email"
+                                                   required
                                                    placeholder="Zadejte email">
                                         </div>
 
-                                        <span class="text-danger"> </span>
+                                        <?php $view->component("errors", [
+                                            "sessionKey" => "email"
+                                        ]) ?>
 
                                         <div class="form-group">
                                             <label for="password">Heslo</label>
                                             <input type="password" name="password" class="form-control"
                                                    id="password"
-                                                   placeholder="Zadejte heslo">
+                                                   placeholder="Zadejte heslo"  required>
                                         </div>
-                                        <span class="text-danger"> </span>
+                                        <?php $view->component("errors", [
+                                            "sessionKey" => "password"
+                                        ]) ?>
 
                                         <div class="form-group">
                                             <label for="role">Vyberte roli</label>
                                             <select class="form-control" name="role" id="role">
-                                                <option disabled selected>Role</option>
-                                                <option {{ old("gender") == 1 ? "selected" : ""}} value="0">Klient
+                                                <option selected value="1">Role</option>
+                                                <option  value="1">Klient
                                                 </option>
-                                                <option {{ old("gender") == 2 ? "selected" : ""}} value="1">Admin
+                                                <option  value="2">Admin
+                                                </option>
+                                                <option  value="3">SuperAdmin
                                                 </option>
                                             </select>
                                         </div>
@@ -130,9 +143,17 @@ $view->include("main");
                                     <button type="submit" class="btn btn-primary">Uložit</button>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
+            </div>
+
+
+            <div class="mt-1">
+                <?php $view->include("success-alert", [
+                        "sessionKey" => "success"
+                ]); ?>
             </div>
         </div>
         <div class="row">
@@ -151,18 +172,38 @@ $view->include("main");
                                     <th>Jméno</th>
                                     <th>Příjmení</th>
                                     <th>Email</th>
-                                    <th>Adresa</th>
+                                    <th>Telefon</th>
+                                    <th>Role</th>
+                                    <th>Datum vytvoření</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
+                                <?php foreach ($users as $user) { ?>
                                 <tr>
-                                    <td></td>
-                                    <td><a href=""></a></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                        <td><?php echo $user->id() ?></td>
+                                        <td><a href=""><?php echo $user->name() ?></a></td>
+                                        <td><?php echo $user->lastName() ?></td>
+                                        <td><?php echo $user->email() ?></td>
+                                        <td><?php echo $user->phone() ?></td>
+                                        <td>
+                                            <?php
+                                            switch ($user->role()) {
+                                                case 1:
+                                                    echo "Zakaznik";
+                                                    break;
+                                                case 2:
+                                                    echo "Admin";
+                                                    break;
+                                                case 3:
+                                                    echo "SuperAdmin";
+                                                    break;
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?php echo $user->createdAt() ?></td>
                                 </tr>
+                                <?php } ?>
 
                                 </tbody>
                             </table>

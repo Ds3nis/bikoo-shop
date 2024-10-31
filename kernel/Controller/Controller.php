@@ -81,8 +81,8 @@ abstract class Controller
 
     }
 
-    public function view(string $name){
-        $this->view->page($name);
+    public function view(string $name, array $data = []){
+        $this->view->page($name, $data);
     }
 
     /**

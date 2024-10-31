@@ -5,7 +5,7 @@ namespace App\Kernel\Auth;
 use App\Kernel\Config\ConfigInterface;
 use App\Kernel\Database\DatabaseInterface;
 use App\Kernel\Session\SessionInterface;
-
+use App\Kernel\Auth\User;
 class Auth implements AuthInterface
 {
 
@@ -32,7 +32,7 @@ class Auth implements AuthInterface
 
 
 
-        $this->session->set("user_id", $user["id"]);
+        $this->session->set("user-id", $user["id"]);
 
         return true;
     }
@@ -47,14 +47,22 @@ class Auth implements AuthInterface
         $this->session->remove("user-id");
     }
 
-    public function user(): ?array{
+    public function user(): ?User{
         if(!$this->check()){
             return  null;
         }
 
-        return $this->db->first($this->table(), [
+        $user = $this->db->first($this->table(), [
            "id" => $this->session->get("user-id"),
         ]);
+
+
+        if ($user){
+            $userObj = new User($user["id"], $user["jmeno"], $user["prijmeni"], $user["telefon"], $user["email"], $user["heslo"], $user["created_at"], $user["updated_at"], $user["role"]);
+            return $userObj;
+        }
+
+        return  null;
     }
 
 

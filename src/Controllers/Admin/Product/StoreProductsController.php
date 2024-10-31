@@ -9,6 +9,11 @@ use App\Kernel\Controller\Controller;
 class StoreProductsController extends Controller
 {
     public function store(){
+
+        $file = $this->request()->file("image");
+
+        dd($file->move("img"));
+
         $validation = $this->request()->validate([
             "title" => ['required|min:3'],
         ]);

@@ -21,35 +21,58 @@ use App\Controllers\Admin\Product\DeleteProductsController;
 use App\Controllers\Admin\Product\UpdateProductsController;
 use App\Controllers\User\Authorisation\IndexAuthorisationController;
 use App\Controllers\User\Authorisation\StoreAuthorisationController;
+use App\Controllers\User\Authorisation\LogoutAuthorisationController;
+use App\Middleware\AuthMiddleware;
+use App\Middleware\GuestMiddleware;
+use App\Controllers\Contacts\IndexContactsController;
+use App\Controllers\Cart\IndexCartController;
+use App\Controllers\Profile\ProfileData\IndexProfileDataController;
+use App\Controllers\Profile\ProfileOrders\IndexProfileOrdersController;
+use App\Controllers\Profile\ProfileChange\IndexProfileChangeController;
+use App\Controllers\Profile\ProfileData\UpdateProfileDataController;
+use App\Controllers\Profile\ProfileChange\UpdateProfileChangeController;
+use App\Middleware\AdminMiddleware;
 
 return [
         Route::get("/", [IndexController::class, "index"]),
-        Route::get("/registration",  [IndexRagistrationController::class, "index"]),
-        Route::post("/registration",  [StoreRegistrationController::class, "store"]),
+        Route::get("/registration",  [IndexRagistrationController::class, "index"], [GuestMiddleware::class]),
+        Route::post("/registration",  [StoreRegistrationController::class, "store"],[GuestMiddleware::class]),
 
-        Route::get("/authorisation",  [IndexAuthorisationController::class, "index"]),
-        Route::post("/authorisation",  [StoreAuthorisationController::class, "store"]),
+        Route::get("/authorisation",  [IndexAuthorisationController::class, "index"], [GuestMiddleware::class]),
+        Route::post("/authorisation",  [StoreAuthorisationController::class, "store"], [GuestMiddleware::class]),
+        Route::post("/logout",  [LogoutAuthorisationController::class, "logout"], [AuthMiddleware::class]),
+
+        Route::get("/contacts", [IndexContactsController::class,"index"]),
+        Route::get("/shopping-cart",[IndexCartController::class, "index"]),
+
+        Route::get("/profile", [IndexProfileDataController::class, "index"], [AuthMiddleware::class]),
+        Route::post("/profile", [UpdateProfileDataController::class, "update"], [AuthMiddleware::class]),
+
+
+        Route::get("/profile/orders", [IndexProfileOrdersController::class, "index"], [AuthMiddleware::class]),
+        Route::get("/profile/change/password", [IndexProfileChangeController::class, "index"], [AuthMiddleware::class]),
+        Route::post("/profile/change/password", [UpdateProfileChangeController::class, "update"], [AuthMiddleware::class]),
 
 
 
    /*     Admin routes*/
 
-        Route::get("/admin", [IndexAdmMainController::class, "index"]),
+        Route::get("/admin", [IndexAdmMainController::class, "index"], [AdminMiddleware::class]),
 
-        Route::get("/admin/products", [IndexProductsController::class, "index"]),
-        Route::get("/admin/products/create", [CreateProductsController::class, "create"]),
-        Route::post("/admin/products/create", [StoreProductsController::class, "store"]),
-        Route::get("/admin/products/product1", [ShowProductsController::class, "show"]),
-        Route::get("/admin/product1/edit", [EditProductsController::class, "edit"]),
-        Route::post("/admin/product1/edit", [UpdateProductsController::class, "update"]),
-        Route::post("/admin/product1/delete", [DeleteProductsController::class, "delete"]),
+        Route::get("/admin/products", [IndexProductsController::class, "index"], [AdminMiddleware::class]),
+        Route::get("/admin/products/create", [CreateProductsController::class, "create"], [AdminMiddleware::class]),
+        Route::post("/admin/products/create", [StoreProductsController::class, "store"], [AdminMiddleware::class]),
+        Route::get("/admin/products/product1", [ShowProductsController::class, "show"], [AdminMiddleware::class]),
+        Route::get("/admin/product1/edit", [EditProductsController::class, "edit"], [AdminMiddleware::class]),
+        Route::post("/admin/product1/edit", [UpdateProductsController::class, "update"], [AdminMiddleware::class]),
+        Route::post("/admin/product1/delete", [DeleteProductsController::class, "delete"], [AdminMiddleware::class]),
 
-        Route::get("/admin/users", [IndexUsersController::class, "index"]),
-        Route::post("/users/", [StoreUsersController::class, "store"]),
-        Route::get("/admin/users/user1", [ShowUsersController::class, "show"]),
-        Route::get("/admin/user1/edit", [EditUsersController::class, "edit"]),
-        Route::post("/admin/user1/update", [UpdateUsersController::class, "update"]),
-        Route::post("/admin/user1/delete", [DeleteUsersController::class, "delete"]),
+        Route::get("/admin/users", [IndexUsersController::class, "index"], [AdminMiddleware::class]),
+        Route::post("/users/", [StoreUsersController::class, "store"], [AdminMiddleware::class]),
+        Route::get("/admin/users/user1", [ShowUsersController::class, "show"], [AdminMiddleware::class]),
+        Route::get("/admin/user1/edit", [EditUsersController::class, "edit"], [AdminMiddleware::class]),
+        Route::post("/admin/user1/update", [UpdateUsersController::class, "update"], [AdminMiddleware::class]),
+        Route::post("/admin/user1/delete", [DeleteUsersController::class, "delete"], [AdminMiddleware::class]),
 
 
 

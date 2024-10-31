@@ -2,6 +2,8 @@
 
 namespace App\Kernel\Http;
 
+use App\Kernel\Upload\UploadedFile;
+use App\Kernel\Upload\UploadedFileInterface;
 use App\Kernel\Validator\Validator;
 use App\Kernel\Validator\ValidatorInterface;
 
@@ -25,6 +27,7 @@ class Request implements RequestInterface
     }
 
 
+
     /**
      * @param Validator $validator
      * @return void
@@ -44,6 +47,23 @@ class Request implements RequestInterface
 
     public function getMethod(){
         return $_SERVER["REQUEST_METHOD"];
+    }
+
+    public function file($key): ?UploadedFileInterface
+    {
+        if (isset($this->files[$key])){
+            $uploadedFile = new UploadedFile(
+                $this->files[$key]["name"],
+                $this->files[$key]["full_path"],
+                $this->files[$key]["type"],
+                $this->files[$key]["tmp_name"],
+                $this->files[$key]["error"],
+                $this->files[$key]["size"],
+            );
+            return $uploadedFile;
+        }else{
+            return null;
+        }
     }
 
     public function input(string $param, $default = null){

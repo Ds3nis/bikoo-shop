@@ -7,6 +7,7 @@ use App\Kernel\Database\DatabaseInterface;
 class Validator implements ValidatorInterface
 {
     private array $errors;
+    private array $data;
 
     public function __construct(private DatabaseInterface $db){
 
@@ -14,7 +15,8 @@ class Validator implements ValidatorInterface
     public function validate(array $data, array $rules): bool
     {
         $this->errors = [];
-//        dd($data, $rules);
+        $this->data = $data;
+
 
         foreach ($rules as $field => $fieldRules) {
             $rules = explode('|', $fieldRules);
@@ -78,6 +80,12 @@ class Validator implements ValidatorInterface
                     }
                     break;
 
+                case 'maxNumeric':
+                    if (is_numeric($value) && strlen((string)$value) > $ruleValue) {
+                        $errors[] = "Počet cifr nemuže byt větši než $ruleValue.";
+                    }
+                    break;
+
                 case 'max':
                     if (is_numeric($value) && $value > $ruleValue) {
                         $errors[] = "Hodnota musí být nejvýše $ruleValue.";
@@ -105,7 +113,7 @@ class Validator implements ValidatorInterface
                     break;
 
                 case 'password_confirm':
-                    if ($value !== ($_POST["password"] ?? null)) {
+                    if ($value !== ($this->data[$ruleValue] ?? null)) {
                         $errors[] = 'Hesla se neshodují.';
                     }
                     break;

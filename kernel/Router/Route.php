@@ -4,16 +4,16 @@ namespace App\Kernel\Router;
 
 class Route
 {
-    public function __construct(private string $uri, private string $method, private $action){
+    public function __construct(private string $uri, private string $method, private $action, private $middlewares = []){
 
     }
 
-    public static function get(string $uri, $action) :self {
-        return new static($uri, "GET", $action);
+    public static function get(string $uri, $action, array $middlewares = []) :static {
+        return new static($uri, "GET", $action, $middlewares);
     }
 
-    public static function post(string $uri, $action) : self{
-        return new static($uri, "POST", $action);
+    public static function post(string $uri, $action, array $middlewares = []) : static{
+        return new static($uri, "POST", $action, $middlewares);
     }
 
 
@@ -32,4 +32,14 @@ class Route
     {
         return $this->action;
     }
+
+    public function hasMiddlewares() : bool{
+        return !empty($this->middlewares);
+    }
+
+
+    public function getMiddlewares() : array{
+        return  $this->middlewares;
+    }
+
 }

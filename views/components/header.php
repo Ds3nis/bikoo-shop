@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var \App\Kernel\Auth\AuthInterface $auth
+ * @var \App\Kernel\Session\SessionInterface $session
+ */
+
+$user = $auth->user();
+?>
+
 <header class="header">
     <div class="container header__container">
         <div class="header__inner">
@@ -24,13 +33,13 @@
                         <a class="nav__link nav__link--current" href="/">Hlavní</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="#">Katalog</a>
+                        <a class="nav__link" href="/katalog">Katalog</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="#">O nás</a>
+                        <a class="nav__link" href="/about">O nás</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="#">Kontakty</a>
+                        <a class="nav__link" href="/contacts">Kontakty</a>
                     </li>
                 </ul>
             </nav>
@@ -64,7 +73,13 @@
                     </a>
                 </li>
                 <li class="profile-menu__item">
-                    <a class="profile-menu__link" href="/authorisation">
+                    <a class="profile-menu__link"
+                       <?php if ($auth->check()) { ?>
+                       href="/profile"
+                       <?php } else{ ?>
+                           href="/authorisation"
+                       <?php }  ?>
+                    >
                         <svg
                             width="19"
                             height="18"
@@ -80,7 +95,7 @@
                     </a>
                 </li>
                 <li class="profile-menu__item">
-                    <a class="profile-menu__link" href="#">
+                    <a class="profile-menu__link" href="/shopping-cart">
                         <svg
                             width="18"
                             height="16"
@@ -99,7 +114,7 @@
             </ul>
         </div>
         <div class="header__btmsearch bottom-search">
-            <form class="bottom-search__search" action="" method="post">
+            <form class="bottom-search__search" action="#" method="post">
                 <input class="bottom-search__text" type="text" />
                 <button
                     class="profile-menu__btn bottom-search__link btn-reset"
