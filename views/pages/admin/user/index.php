@@ -154,6 +154,9 @@ $view->include("main");
                 <?php $view->include("success-alert", [
                         "sessionKey" => "success"
                 ]); ?>
+                <?php $view->include("fail-alert", [
+                    "sessionKey" => "failed"
+                ]); ?>
             </div>
         </div>
         <div class="row">
@@ -182,7 +185,7 @@ $view->include("main");
                                 <?php foreach ($users as $user) { ?>
                                 <tr>
                                         <td><?php echo $user->id() ?></td>
-                                        <td><a href=""><?php echo $user->name() ?></a></td>
+                                        <td><a href="/admin/users/<?php echo '?id=' . $user->id() ?>"><?php echo $user->name() ?></a></td>
                                         <td><?php echo $user->lastName() ?></td>
                                         <td><?php echo $user->email() ?></td>
                                         <td><?php echo $user->phone() ?></td>

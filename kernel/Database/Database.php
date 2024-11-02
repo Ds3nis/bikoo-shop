@@ -119,6 +119,34 @@ class Database implements DatabaseInterface
 
     }
 
+    public function delete(string $table, array $conditions = []){
+
+        $where = "";
+
+        if(count($conditions) > 0){
+            $where = 'WHERE ' . implode(" AND ", array_map(fn($field) => "$field = :$field", array_keys($conditions)));
+        }
+
+        $sql = "DELETE FROM $table $where";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        try {
+            $stmt->execute($conditions);
+            return [
+                'success' => true,
+                'id' => (int) $this->pdo->lastInsertId(),
+                'message' => 'Data deleted successfully.',
+            ];
+        }catch (\PDOException $exception){
+            return [
+                'success' => false,
+                'id' => (int) $this->pdo->lastInsertId(),
+                'message' => 'Database error: ' . $exception->getMessage(),
+            ];
+        }
+    }
+
     public function update(string $table, array $data, array $conditions = []): void
     {
         $fields = array_keys($data);

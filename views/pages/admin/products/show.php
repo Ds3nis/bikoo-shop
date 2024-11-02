@@ -1,16 +1,19 @@
 <?php
 /**
  * @var \App\Kernel\View\View $view
+ * @var \App\Models\Product $product
  */
 ?>
 <?php
 $view->include("main");
+
+
 ?>
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Produkt name</h1>
+                <h1 class="m-0"><?php echo $product->name()?></h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -28,7 +31,7 @@ $view->include("main");
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-2 mb-3">
-                <a href="/admin/product1/edit"
+                <a href="/admin/product/edit/?id=<?php echo $product->id()?>"
                    class="btn btn-block btn-primary">Upravit</a>
             </div>
             <div class="col-2 mb-3">
@@ -48,10 +51,11 @@ $view->include("main");
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="/admin/product1/delete"
+                        <form action="/admin/product/delete"
                               method="post">
+                            <input type="hidden" name="product_id" value="<?php echo $product->id()?>">
                             <div class="modal-body">
-                                {{ $product->title}}
+                                <?php echo $product->name()?>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary"
@@ -65,45 +69,67 @@ $view->include("main");
             </div>
         </div>
         <div class="row">
-            <div class="card-body table-responsive p-0" style="height: 450px;">
+            <div class="card-body table-responsive p-0" >
                 <table class="table table-striped table-dark table-hover table-head-fixed text-nowrap">
                     <tbody>
                     <tr>
                         <th>#</th>
-                        <td>1</td>
+                        <td><?php echo $product->id()?></td>
                     </tr>
                     <tr>
                         <th>Název produktu:</th>
-                        <td>fdfd</td>
+                        <td><?php echo $product->name() ?></td>
                     </tr>
 
-                    <tr>
-                        <th>Obrázek:</th>
-                        <td><img style="width: 300px" src=""></td>
-                    </tr>
+
+                    <?php
+                    $images = explode('|', $product->images());
+                    $images = array_filter($images);
+
+                    if (!empty($images)) {
+                        foreach ($images as $imagePath) {
+                            ?>
+                            <tr>
+                                <th>Obrázek:</th>
+                                <td><img style="width: 300px" src="<?php echo htmlspecialchars($imagePath); ?>"></td>
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <tr>
+                            <td colspan="2">Nejsou k dispozici žádné obrázky</td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+
 
 
                     <tr>
                         <th>Kód produktu:</th>
-                        <td>1</td>
+                        <td><?php echo $product->code() ?></td>
                     </tr>
                     <tr>
                         <th>Cena produktu:</th>
-                        <td>10 CZK</td>
+                        <td><?php echo $product->price() ?> CZK</td>
                     </tr>
                     <tr>
                         <th>Dostupnost:</th>
-
-                        <td>Na skladě</td>
+                        <?php if ($product->availability() == 1) {?>
+                            <td>Skladem</td>
+                        <?php }elseif ($product->availability() == 0) {?>
+                            <td>Není skladem</td>
+                        <?php } ?>
                     </tr>
                     <tr>
                         <th>Množství:</th>
-                        <td>1 ks.</td>
+                        <td><?php echo $product->count() ?> ks.</td>
                     </tr>
                     <tr>
                         <th>Popis:</th>
                         <td style="white-space: pre-wrap; text-align: justify">
-                            {!! htmlspecialchars_decode($product->description) !!}
+                            <?php echo htmlspecialchars_decode($product->description()) ?>
                         </td>
                     </tr>
                     </tbody>

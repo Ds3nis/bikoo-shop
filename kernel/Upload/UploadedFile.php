@@ -78,7 +78,7 @@ class UploadedFile implements UploadedFileInterface
         $filePath = "$storagePath/$fileName.{$this->getExtension()}";
 
         if(move_uploaded_file($this->tmpName, $filePath)){
-            return "assets/$path/$fileName";
+            return "assets/$path/$fileName.{$this->getExtension()}";
         }
 
         return false;

@@ -76,4 +76,14 @@ class UserService
         return true;
     }
 
+    public function delete(array $data){
+        $result = $this->db->delete("zakaznik", $data);
+
+        if($result["success"] == false) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

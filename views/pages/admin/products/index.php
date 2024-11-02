@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\Kernel\View\View $view
+ * @var array<\App\Models\Product> $products
  */
 ?>
 <?php
@@ -10,7 +11,7 @@ $view->include("main");
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Товари</h1>
+                <h1 class="m-0">Produkty</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -26,9 +27,17 @@ $view->include("main");
 <section class="content">
     <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
+        <div class="row flex-column">
             <div class="col-1 mb-3">
                 <a href="admin/products/create" class="btn btn-block btn-primary">Přidat</a>
+            </div>
+            <div class="mt-1">
+                <?php $view->include("success-alert", [
+                    "sessionKey" => "success"
+                ]); ?>
+                <?php $view->include("fail-alert", [
+                    "sessionKey" => "failed"
+                ]); ?>
             </div>
         </div>
         <div class="row">
@@ -52,25 +61,27 @@ $view->include("main");
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <?php foreach ($products as $product) {?>
                                 <tr>
-                                    <td>1</td>
+                                    <td><?php echo $product->id() ?></td>
                                     <td>
-                                        <a href="/admin/products/product1">title</a>
+                                        <a href="/admin/products/<?php echo '?id=' . $product->id() ?>"><?php echo $product->name() ?></a>
                                     </td>
-                                    <td>code</td>
-                                    <td>price</td>
-
-                                    <td>В наявності</td>
-
-                                    <td>Немає в наявності</td>
-
-                                    <td>4</td>
+                                    <td><?php echo $product->code() ?></td>
+                                    <td><?php echo $product->price() ?></td>
+                                    <?php if ($product->availability() == 1) {?>
+                                        <td>Skladem</td>
+                                    <?php }elseif ($product->availability() == 0) {?>
+                                        <td>Není skladem</td>
+                                    <?php } ?>
+                                    <td><?php echo $product->count() ?></td>
                                     <td>
                                         <a href="/admin/product1/edit"
                                         class="text-success">
                                         <i class="fas fa-pencil-alt"></i></a>
                                     </td>
                                 </tr>
+                                <?php } ?>
                                 </tbody>
                             </table>
                         </div>

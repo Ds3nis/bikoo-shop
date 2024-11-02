@@ -22,7 +22,13 @@ class Validator implements ValidatorInterface
             $rules = explode('|', $fieldRules);
             $value = $data[$field] ?? null;
 
-            $fieldErrors = $this->validateRules($field, $value, $rules);
+            if (is_array($value) && isset($_FILES[$field])) {
+                if (!empty(array_filter($value['name']))){
+                    $fieldErrors = $this->validateFileArray($field, $value, $rules);
+                }
+            } else {
+                $fieldErrors = $this->validateRules($field, $value, $rules);
+            }
             if (!empty($fieldErrors)) {
                 $this->errors[$field] = $fieldErrors;
             }
@@ -36,7 +42,6 @@ class Validator implements ValidatorInterface
 
     private function validateRules(string $field, ?string $value, array $rules): array
     {
-
         $errors = [];
         foreach ($rules as $rule) {
             // Kontrola, zda pravidlo má další parametry (např. min:3)
@@ -101,7 +106,10 @@ class Validator implements ValidatorInterface
                     break;
 
                 case 'unique':
-                    if (!$this->db->isUnique('zakaznik', $field, $value)) {
+
+                    list($table, $field) = explode(',', $ruleValue);
+//                    dd($field,$table, $ruleValue);
+                    if (!$this->db->isUnique($table, $field, $value)) {
                         $errors[] = 'Hodnota musí být unikátní.';
                     }
                     break;
@@ -125,4 +133,62 @@ class Validator implements ValidatorInterface
         }
             return $errors;
     }
+
+    private function validateFileArray(string $field, array $fileArray, array $rules): array
+    {
+        $errors = [];
+//        dd($field, $fileArray, $rules);
+        // Kontrola maximálního počtu souborů
+        $maxFiles = 5;
+        if (count($fileArray['name']) > $maxFiles) {
+            $errors[] = "Maximální počet souborů je $maxFiles.";
+        }
+
+        foreach ($fileArray['name'] as $index => $fileName) {
+            $fileSize = $fileArray['size'][$index];
+            $fileTmpName = $fileArray['tmp_name'][$index];
+            $fileType = $fileArray['type'][$index];
+            $fileError = $fileArray['error'][$index];
+
+            // Kontrola každého pravidla pro soubor
+            foreach ($rules as $rule) {
+                list($ruleName, $ruleValue) = explode(':', $rule . ':');
+
+                switch ($ruleName) {
+                    case 'required':
+                        if ($fileError === UPLOAD_ERR_NO_FILE) {
+                            $errors[] = "Soubor $fileName je povinný.";
+                        }
+                        break;
+
+                    case 'max':
+                        if ($fileSize > $ruleValue * 1024) {
+                            $errors[] = "Soubor $fileName překračuje maximální velikost $ruleValue KB.";
+                        }
+                        break;
+
+                    case 'mimes':
+                        $allowedMimes = explode(',', $ruleValue);
+                        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                        if (!in_array($fileExtension, $allowedMimes)) {
+                            $errors[] = "Soubor $fileName má nepovolený formát. Povoleny jsou: $ruleValue.";
+                        }
+                        break;
+
+                    case 'image':
+                        if (!in_array($fileType, ['image/png', 'image/jpg', 'image/jpeg', 'image/svg+xml', 'image/webp'])) {
+                            $errors[] = "Soubor $fileName není obrázek.";
+                        }
+                        break;
+
+                    default:
+                        // Přidání dalších pravidel
+                        break;
+                }
+            }
+        }
+
+        return $errors;
+    }
+
 }

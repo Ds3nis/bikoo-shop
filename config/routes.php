@@ -62,17 +62,17 @@ return [
         Route::get("/admin/products", [IndexProductsController::class, "index"], [AdminMiddleware::class]),
         Route::get("/admin/products/create", [CreateProductsController::class, "create"], [AdminMiddleware::class]),
         Route::post("/admin/products/create", [StoreProductsController::class, "store"], [AdminMiddleware::class]),
-        Route::get("/admin/products/product1", [ShowProductsController::class, "show"], [AdminMiddleware::class]),
-        Route::get("/admin/product1/edit", [EditProductsController::class, "edit"], [AdminMiddleware::class]),
-        Route::post("/admin/product1/edit", [UpdateProductsController::class, "update"], [AdminMiddleware::class]),
-        Route::post("/admin/product1/delete", [DeleteProductsController::class, "delete"], [AdminMiddleware::class]),
+        Route::get("/admin/products/", [ShowProductsController::class, "show"], [AdminMiddleware::class]),
+        Route::get("/admin/product/edit/", [EditProductsController::class, "edit"], [AdminMiddleware::class]),
+        Route::post("/admin/product/edit", [UpdateProductsController::class, "update"], [AdminMiddleware::class]),
+        Route::post("/admin/product/delete", [DeleteProductsController::class, "delete"], [AdminMiddleware::class]),
 
         Route::get("/admin/users", [IndexUsersController::class, "index"], [AdminMiddleware::class]),
         Route::post("/users/", [StoreUsersController::class, "store"], [AdminMiddleware::class]),
-        Route::get("/admin/users/user1", [ShowUsersController::class, "show"], [AdminMiddleware::class]),
-        Route::get("/admin/user1/edit", [EditUsersController::class, "edit"], [AdminMiddleware::class]),
-        Route::post("/admin/user1/update", [UpdateUsersController::class, "update"], [AdminMiddleware::class]),
-        Route::post("/admin/user1/delete", [DeleteUsersController::class, "delete"], [AdminMiddleware::class]),
+        Route::get("/admin/users/", [ShowUsersController::class, "show"], [AdminMiddleware::class]),
+        Route::get("/admin/edit/", [EditUsersController::class, "edit"], [AdminMiddleware::class]),
+        Route::post("/admin/update/", [UpdateUsersController::class, "update"], [AdminMiddleware::class]),
+        Route::post("/admin/delete", [DeleteUsersController::class, "delete"], [AdminMiddleware::class]),
 
 
 

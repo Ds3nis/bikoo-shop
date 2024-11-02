@@ -33,6 +33,12 @@ $view->include("main");
             <div class="pt-3 col-8 card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Přidání produktu</h3></div>
+                <?php $view->include("success-alert", [
+                    "sessionKey" => "inserted"
+                ]); ?>
+                <?php $view->include("fail-alert", [
+                    "sessionKey" => "dbfailed"
+                ]); ?>
                 <form action="admin/products/create" enctype="multipart/form-data" method="post">
                     <div class="card-body">
                         <div class="form-group">
@@ -56,7 +62,15 @@ $view->include("main");
                             <input type="number" min="0" class="form-control" name="code" id="code"
                                    placeholder="Zadejte kód produktu"
                                    value="">
-                            <div class="text-danger">{{$message}}</div>
+                            <?php if($session->has("code")) { ?>
+                                <div class="text-danger">
+                                    <ul>
+                                        <?php foreach ($session->getFlash("code") as $error) { ?>
+                                            <li style="color: red"><?php echo  $error ?></li>
+                                        <?php  } ?>
+                                    </ul>
+                                </div>
+                            <?php  }?>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputFile">Vložení souboru</label>
@@ -72,14 +86,30 @@ $view->include("main");
 
                             </ul>
                         </div>
-                        <span class="text-danger">{{ $message }} </span>
+                        <?php if($session->has("image")) { ?>
+                            <div class="text-danger">
+                                <ul>
+                                    <?php foreach ($session->getFlash("image") as $error) { ?>
+                                        <li style="color: red"><?php echo  $error ?></li>
+                                    <?php  } ?>
+                                </ul>
+                            </div>
+                        <?php  }?>
                         <div class="form-group">
                             <label for="price">Cena</label>
-                            <input type="text" class="form-control" name="price" id="price"
+                            <input type="number" class="form-control" name="price" id="price"
                                    placeholder="Zadejte cenu"
                                    value="">
 
-                            <div class="text-danger">{{$message}}</div>
+                            <?php if($session->has("price")) { ?>
+                                <div class="text-danger">
+                                    <ul>
+                                        <?php foreach ($session->getFlash("price") as $error) { ?>
+                                            <li style="color: red"><?php echo  $error ?></li>
+                                        <?php  } ?>
+                                    </ul>
+                                </div>
+                            <?php  }?>
 
                         </div>
                         <div class="form-group">
@@ -88,18 +118,42 @@ $view->include("main");
                                 <option value="1">Skladem</option>
                                 <option value="0">Není skladem</option>
                             </select>
-                            <div class="text-danger">{{$message}}</div>
+                            <?php if($session->has("is_abailable")) { ?>
+                                <div class="text-danger">
+                                    <ul>
+                                        <?php foreach ($session->getFlash("is_available") as $error) { ?>
+                                            <li style="color: red"><?php echo  $error ?></li>
+                                        <?php  } ?>
+                                    </ul>
+                                </div>
+                            <?php  }?>
                         </div>
                         <div class="form-group">
                             <label for="quantity">Množství</label>
                             <input type="number" min="0" class="form-control" name="quantity" id="quantity"
                                    placeholder="Zadejte množství" value="">
-                            <div class="text-danger">{{$message}}</div>
+                            <?php if($session->has("quantity")) { ?>
+                                <div class="text-danger">
+                                    <ul>
+                                        <?php foreach ($session->getFlash("quantity") as $error) { ?>
+                                            <li style="color: red"><?php echo  $error ?></li>
+                                        <?php  } ?>
+                                    </ul>
+                                </div>
+                            <?php  }?>
                         </div>
                         <div class="form-group">
                             <label for="summernote">Obsah</label>
                             <textarea name="description" id="summernote"></textarea>
-                            <div class="text-danger">{{$message}}</div>
+                            <?php if($session->has("description")) { ?>
+                                <div class="text-danger">
+                                    <ul>
+                                        <?php foreach ($session->getFlash("description") as $error) { ?>
+                                            <li style="color: red"><?php echo  $error ?></li>
+                                        <?php  } ?>
+                                    </ul>
+                                </div>
+                            <?php  }?>
                         </div>
                         <div class="card">
                             <button type="submit" class="btn btn-primary">Uložit změny</button>

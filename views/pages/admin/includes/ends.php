@@ -17,7 +17,7 @@
 <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+<script src="assets/js/file-images.js"></script>
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -47,7 +47,6 @@
 
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
-<script src="assets/js/images.js"></script>
 <script>
     $(document).ready(function () {
         $("#summernote").summernote({

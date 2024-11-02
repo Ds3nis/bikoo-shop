@@ -49,25 +49,36 @@ class Request implements RequestInterface
         return $_SERVER["REQUEST_METHOD"];
     }
 
-    public function file($key): ?UploadedFileInterface
+    public function file($key): ?array
     {
         if (isset($this->files[$key])){
+            $uploadedArray = [];
+            $fileArray = $this->files[$key];
+        foreach ($fileArray['name'] as $index => $fileName) {
+            $fileSize = $fileArray['size'][$index];
+            $fileFullPath = $fileArray['full_path'][$index];
+            $fileTmpName = $fileArray['tmp_name'][$index];
+            $fileType = $fileArray['type'][$index];
+            $fileError = $fileArray['error'][$index];
+
             $uploadedFile = new UploadedFile(
-                $this->files[$key]["name"],
-                $this->files[$key]["full_path"],
-                $this->files[$key]["type"],
-                $this->files[$key]["tmp_name"],
-                $this->files[$key]["error"],
-                $this->files[$key]["size"],
+                $fileName,
+                $fileFullPath,
+                $fileType,
+                $fileTmpName,
+                $fileError,
+                $fileSize,
             );
-            return $uploadedFile;
+            array_push($uploadedArray, $uploadedFile);
+        }
+        return $uploadedArray;
         }else{
             return null;
         }
     }
 
     public function input(string $param, $default = null){
-        return $this->post[$param] ?? $this->get[$param] ?? $default;
+        return $this->post[$param] ?? $this->get[$param] ?? $this->files[$param] ?? $default;
     }
 
     public function getUri(){

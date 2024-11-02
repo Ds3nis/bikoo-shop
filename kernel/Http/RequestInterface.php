@@ -13,7 +13,7 @@ interface RequestInterface
     public function validate(array $rules) : bool;
     public function input(string $param, $default = null);
 
-    public function file($key) : ?UploadedFileInterface;
+    public function file($key) : ?array;
     public function getUri();
     public function errors() : array;
 

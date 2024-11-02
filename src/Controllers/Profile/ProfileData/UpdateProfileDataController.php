@@ -18,7 +18,7 @@ class UpdateProfileDataController extends Controller
 
 
         if ($currentUser->getEmail() != $this->request()->input("email")){
-            $data["email"] = "required|email|unique:zakaznik|max:100";
+            $data["email"] = "required|email|unique:zakaznik,email|max:100";
         }
         $validate = $this->request()->validate($data);
 

@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\Kernel\View\View $view
+ * @var \App\Models\Product $product
  */
 ?>
 <?php
@@ -29,15 +30,19 @@ $view->include("main");
         <div class="row justify-content-center">
             <div class="pt-3 col-9 card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Upravit produkt 1</h3></div>
-                <form action="/admin/product1/edit" enctype="multipart/form-data"
+                    <h3 class="card-title">Upravit produkt <?php echo $product->code() ?></h3></div>
+                <form action="/admin/product/edit" enctype="multipart/form-data"
                       method="POST">
+                    <?php $view->include("success-alert", [
+                        "sessionKey" => "updated"
+                    ]); ?>
+                    <input type="hidden" name="product_id" value="<?php echo $product->id()?>">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="title">Změnit název</label>
                             <textarea type="text" class="form-control" name="title" id="title"
-                                      placeholder="Zadejte název" style="resize: none;">{{ $product->title ?? old("title") }}
-                                </textarea>
+                                      placeholder="Zadejte název" style="resize: none;"><?php echo $product->name()?>
+                            </textarea>
 
                             <div class="text-danger">{{$message}}</div>
 
@@ -55,12 +60,20 @@ $view->include("main");
                             </div>
                         </div>
                         <ul class="custom-file-input-list">
+                            <?php
+                            $images = explode('|', $product->images());
+                            $images = array_filter($images);
 
+                            if (!empty($images)) {
+                                foreach ($images as $imagePath) {
+                                    ?>
+                                    <li>
+                                        <img style="width: 150px" src="<?php echo htmlspecialchars($imagePath); ?>">
+                                    </li>
+                                    <?php
+                                }
+                            } ?>
 
-
-                            <li>
-                                <img style="width: 150px" src="">
-                            </li>
 
                         </ul>
 
@@ -71,7 +84,7 @@ $view->include("main");
                         <label for="price">Změnit cenu</label>
                         <input type="number" class="form-control" name="price" id="price"
                                placeholder="Zadejte cenu"
-                               value="">
+                               value="<?php echo $product->price()?>">
 
                         <div class="text-danger">{{$message}}</div>
 
@@ -79,9 +92,9 @@ $view->include("main");
                     <div class="form-group">
                         <label for="is_available">Změnit dostupnost</label>
                         <select class="form-control" name="is_available" id="is_available">
-                            <option @selected($product->is_available) value="1">K dispozici
+                            <option  value="1" <?php echo $product->availability() == 1 ? 'selected' : ''; ?>>K dispozici
                             </option>
-                            <option @selected(!$product->is_available) value="0">Není k dispozici
+                            <option value="0" <?php echo $product->availability() == 0 ? 'selected' : ''; ?>>Není k dispozici
                             </option>
                         </select>
 
@@ -92,7 +105,7 @@ $view->include("main");
                         <label for="quantity">Změnit množství</label>
                         <input type="number" min="0" class="form-control" name="quantity" id="quantity"
                                placeholder="Zadejte množství"
-                               value="">
+                               value="<?php echo $product->count()?>">
 
                         <div class="text-danger">{{$message}}</div>
 
@@ -100,7 +113,7 @@ $view->include("main");
                     <div class="form-group">
                         <label for="summernote">Změnit popis</label>
                         <textarea name="description"
-                                  id="summernote">{{ $product->description ?? old("content") }}</textarea>
+                                  id="summernote"><?php echo $product->description() ?></textarea>
                         <div class="text-danger">{{$message}}</div>
                     </div>
                     <div class="card">
