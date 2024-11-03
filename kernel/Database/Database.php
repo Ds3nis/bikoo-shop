@@ -23,7 +23,6 @@ class Database implements DatabaseInterface
         $binds = implode(", ", array_map(fn($field) => ":$field", $fields));
 
         $sql = "INSERT INTO $table ($columns) VALUES ($binds)";
-//        dd($sql);
         $stmt = $this->pdo->prepare($sql);
 
         try {
@@ -115,8 +114,6 @@ class Database implements DatabaseInterface
 
         $stmt->execute($conditions);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-
     }
 
     public function delete(string $table, array $conditions = []){
@@ -161,7 +158,6 @@ class Database implements DatabaseInterface
 
         $sql = "UPDATE $table SET $set $where";
 //        dd($sql);
-
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute(array_merge($data, $conditions));

@@ -33,7 +33,7 @@ $user = $auth->user();
                         <a class="nav__link nav__link--current" href="/">Hlavní</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="/katalog">Katalog</a>
+                        <a class="nav__link" href="/catalog">Katalog</a>
                     </li>
                     <li class="nav__item">
                         <a class="nav__link" href="/about">O nás</a>

@@ -17,7 +17,6 @@ class ProductService
      */
     public function all() : array{
         $products = $this->db->get("produkt");
-
         $products =  array_map(function ($product) {
             return new Product(
                 $product["id"],

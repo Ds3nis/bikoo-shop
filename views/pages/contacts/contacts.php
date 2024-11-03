@@ -47,7 +47,7 @@
                         </div>
                         <form
                             class="form-container contact__form"
-                            action="#"
+                            action="/contacts"
                             method="post"
                         >
                             <div class="form-fields">

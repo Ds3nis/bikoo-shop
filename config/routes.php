@@ -32,9 +32,18 @@ use App\Controllers\Profile\ProfileChange\IndexProfileChangeController;
 use App\Controllers\Profile\ProfileData\UpdateProfileDataController;
 use App\Controllers\Profile\ProfileChange\UpdateProfileChangeController;
 use App\Middleware\AdminMiddleware;
+use App\Controllers\Catalog\IndexCatalogController;
+use App\Controllers\Catalog\ShowCatalogController;
+use App\Controllers\Cart\StoreCartController;
+use App\Controllers\Contacts\StoreContactsController;
 
 return [
         Route::get("/", [IndexController::class, "index"]),
+
+        Route::get("/catalog", [IndexCatalogController::class, "index"]),
+        Route::get("/catalog/product/", [ShowCatalogController::class, "show"]),
+
+
         Route::get("/registration",  [IndexRagistrationController::class, "index"], [GuestMiddleware::class]),
         Route::post("/registration",  [StoreRegistrationController::class, "store"],[GuestMiddleware::class]),
 
@@ -43,7 +52,9 @@ return [
         Route::post("/logout",  [LogoutAuthorisationController::class, "logout"], [AuthMiddleware::class]),
 
         Route::get("/contacts", [IndexContactsController::class,"index"]),
+        Route::post("/contacts", [StoreContactsController::class,"store"]),
         Route::get("/shopping-cart",[IndexCartController::class, "index"]),
+        Route::post("/shopping-cart/add",[StoreCartController::class, "store"], [AuthMiddleware::class]),
 
         Route::get("/profile", [IndexProfileDataController::class, "index"], [AuthMiddleware::class]),
         Route::post("/profile", [UpdateProfileDataController::class, "update"], [AuthMiddleware::class]),
