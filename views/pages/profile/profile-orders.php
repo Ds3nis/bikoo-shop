@@ -2,6 +2,8 @@
 /**
  * @var \App\Kernel\View\ViewInterface $view
  * @var \App\Kernel\Session\SessionInterface $session
+ * @var array<\App\Models\Order> $orders
+ * @var array<\App\Models\Product> $ordersProduct
  */
 ?>
 
@@ -30,41 +32,41 @@
                         ]) ?>
                         <div class="account__content account-content">
                             <div class="container">
+                                <?php foreach ($orders as $order) {?>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card mb-5">
                                             <div class="card-header bg-success">
-                                                <h4 class="text-white">Objednávka №1 stav</h4>
-                                                @if($order->status == 1)
-                                                <h6 class="text-white">
-                                                    Статус замовлення: В процесі обробки
-                                                </h6>
-                                                @elseif($order->status == 2)
-                                                <h6 class="text-white">
-                                                    Статус замовлення: Відправлено
-                                                </h6>
-                                                @elseif($order->status == 3)
-                                                <h6 class="text-white">
-                                                    Статус замовлення: Доставлено
-                                                </h6>
-                                                @endif
-                                                <h4 class="text-white">
-                                                    Stav objednávky: V procesu zpracování
-                                                </h4>
-                                                <h4 class="text-white">Datum objednávky</h4>
+                                                <h4 class="text-white">Objednávka № <?php echo $order->id() ?> stav</h4>
+                                                <?php if ($order->status() == 1): ?>
+                                                    <h4 class="text-white">
+                                                        Stav objednávky: Ve zpracování
+                                                    </h4>
+                                                <?php elseif ($order->status() == 2): ?>
+                                                    <h4 class="text-white">
+                                                        Stav objednávky: Odesláno
+                                                    </h4>
+                                                <?php elseif ($order->status() == 3): ?>
+                                                    <h4 class="text-white">
+                                                        Stav objednávky: Doručeno
+                                                    </h4>
+                                                <?php endif; ?>
+
+                                                <h4 class="text-white">Datum objednávky: <?php echo $order->date() ?> </h4>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <h5>Інформація про замовлення</h5>
+                                                    <h5>Informace o objednávce</h5>
                                                     <div class="col-md-6">
                                                         <label for="">Jmeno</label>
-                                                        <div class="border p-2"></div>
-                                                        <label for="">E-mail</label>
-                                                        <div class="border p-2"></div>
+                                                        <div class="border p-2"><?php echo $order->fullName() ?></div>
+<!--                                                        <label for="">E-mail</label>-->
+<!--                                                        <div class="border p-2">--><?php //echo $order->email() ?><!--</div>-->
                                                         <label for="">Kontakty</label>
-                                                        <div class="border p-2"></div>
+                                                        <div class="border p-2">+ <?php echo $order->phone() ?></div>
                                                         <label for="">Adresa</label>
-                                                        <div class="border p-2"></div>
+                                                        <div class="border p-2"><?php echo $order->city() . " " .
+                                                                $order->street() . " " . $order->homeNumber()?></div>
                                                     </div>
                                                     <div class="col">
                                                         <table class="table table-bordered table-hover">
@@ -77,30 +79,31 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
+                                                            <?php foreach ($ordersProduct[$order->id()] as $product) {?>
                                                             <tr>
-                                                                <td
-                                                                    style="font-size: 15px; cursor: pointer"
-                                                                >
-                                                                    <a href="#" class="link-primary"></a>
+                                                                <td style="font-size: 15px; cursor: pointer">
+                                                                    <a href="/catalog/product/?id=<?php echo $product->id() ?>" class="link-primary"><?php echo $product->name() ?></a>
                                                                 </td>
-                                                                <td></td>
-                                                                <td>11 CZK</td>
-                                                                @php $photos = explode("|",
-                                                                $product->image); $photos =
-                                                                array_filter($photos); @endphp
+                                                                <td><?php echo $product->countInOrder() ?></td>
+                                                                <td><?php echo $product->price() ?> CZK</td>
                                                                 <td>
+                                                                    <?php
+                                                                    $images = explode('|', $product->images());
+                                                                    $imagesPath = array_filter($images);
+                                                                    ?>
                                                                     <img
-                                                                        style="width: 100px; height: 150px object-fit:cover;"
-                                                                        src="../img/coming-bike1.png"
-                                                                        alt="{{$product->title}}"
+                                                                        style="width: 150px; height: 150px; object-fit:cover;"
+                                                                        src="<?php echo $imagesPath[0] ?>"
+                                                                        alt="<?php echo $product->name() ?>"
                                                                     />
                                                                 </td>
                                                             </tr>
+                                                            <?php } ?>
                                                             </tbody>
                                                         </table>
                                                         <h4 class="px-2">
                                                             Celková částka:
-                                                            <span class="float-end">1111 CZK</span>
+                                                            <span class="float-end"><?php echo $order->price() ?> CZK</span>
                                                         </h4>
                                                     </div>
                                                 </div>
@@ -108,6 +111,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php } ?>
                             </div>
                             <!--                            <div class="account-content__title">-->
                             <!--                              <p>Zatím nemáte žádné objednávky</p>-->
@@ -120,6 +124,6 @@
     </main>
     <?php $view->component("footer") ?>
 </div>
-<script defer src="../js/burger.js"></script>
+<script defer src="assets/js/burger.js"></script>
 </body>
 </html>

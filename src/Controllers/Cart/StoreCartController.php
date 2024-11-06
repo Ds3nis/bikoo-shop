@@ -69,7 +69,7 @@ class StoreCartController extends Controller
             "cena" => $updatedTotalPrice
         ]);
 
-        $this->session()->set("success", "Товар успішно додано до кошика");
+        $this->session()->set("success", "Produkt byl úspěšně přidán do košíku");
 
         if (is_null($request->input("counter"))){
             $this->redirect("/catalog");

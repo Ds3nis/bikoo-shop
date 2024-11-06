@@ -6,7 +6,9 @@
 <?php $view->component("head"); ?>
   <body>
     <div class="wrapper">
-        <?php $view->component("header") ?>
+        <?php $view->component("header", [
+            "activeMenu" => "hlavni"
+        ]) ?>
       <main class="main">
         <section class="hero">
           <h1 class="visually-hidden">Main slider</h1>
@@ -195,7 +197,7 @@ PŘEHLED
 Máte nápad nebo projekt, pojďme spolupracovat a vytvořit něco
                 úžasného.
               </p>
-              <a class="et-in-touch__link" href="#">Koupit nyní</a>
+              <a class="et-in-touch__link" href="/contacts">Koupit nyní</a>
             </div>
             <!--End Get In Touch-->
           </div>

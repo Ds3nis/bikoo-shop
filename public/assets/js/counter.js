@@ -7,18 +7,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const plusButton = counter.querySelector('.plus-btn');
         const quantityInput = counter.querySelector('.quantity');
 
-    
         const minValue = 1;
-        const maxValue = 50;
+        const maxValue = 15;
 
-        // Функція перевірки та виправлення некоректних значень
         const validateQuantity = () => {
             let currentValue = parseInt(quantityInput.value);
 
             // Якщо значення не є числом або менше мінімуму, виправити його
-            if (isNaN(currentValue) || currentValue < minValue) {
+            if (isNaN(currentValue) || currentValue <= minValue) {
                 quantityInput.value = minValue;
-            } else if (currentValue > maxValue) {
+            } else if (currentValue >= maxValue) {
                 quantityInput.value = maxValue;
             }
             toggleMinusButton();
@@ -26,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Вимикання кнопки мінус при досягненні мінімального значення
         const toggleMinusButton = () => {
-            if (parseInt(quantityInput.value) <= minValue) {
+            if (parseInt(quantityInput.value) < minValue) {
                 minusButton.disabled = true;
             } else {
                 minusButton.disabled = false;
@@ -34,28 +32,27 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Додавання обробника для кнопки мінус
-        minusButton.addEventListener('click', function() {
+        minusButton.addEventListener('click', function(event) {
             let currentValue = parseInt(quantityInput.value);
 
             if (currentValue > minValue) {
                 quantityInput.value = currentValue - 1;
             }
             validateQuantity();
+            // Встановлюємо значення 'decrease' в поле 'action'
+            minusButton.value = 'decrease';
         });
 
         // Додавання обробника для кнопки плюс
-        plusButton.addEventListener('click', function() {
+        plusButton.addEventListener('click', function(event) {
             let currentValue = parseInt(quantityInput.value);
 
             if (currentValue < maxValue) {
                 quantityInput.value = currentValue + 1;
             }
             validateQuantity();
-        });
-
-        // Обробка зміни значення вручну (якщо інпут не readonly)
-        quantityInput.addEventListener('input', function() {
-            validateQuantity();
+            // Встановлюємо значення 'increase' в поле 'action'
+            plusButton.value = 'increase';
         });
 
         // Ініціалізація: перевірка стану кнопки мінус після завантаження сторінки

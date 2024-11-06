@@ -14,10 +14,20 @@ class Product
         private int $availability,
         private int $count,
         private string $createdAt,
-        private string $updatedAt
+        private string $updatedAt,
+        private ?int $countInOrder = 1,
     ){
 
     }
+
+    /**
+     * @return int
+     */
+    public function countInOrder(): int
+    {
+        return $this->countInOrder;
+    }
+
 
     /**
      * @return int

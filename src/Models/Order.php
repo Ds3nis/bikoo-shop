@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\OrderService;
+
 class Order
 {
     public function __construct(

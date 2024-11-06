@@ -1,0 +1,95 @@
+.checkout {
+    font-family: Montserrat;
+    font-style: normal;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.checkout__holder {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.checkout__form {
+    box-sizing: border-box;
+    padding: 20px 35px;
+    background: #F2F2F2;
+    border: 1px solid #d8e4e5;
+    width: 50%;
+    min-width: 300px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input {
+    width: 100%;
+    height: 44px;
+    padding: 0 1rem;
+    font-size: 1rem;
+    background-color: #05060f0a;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    transition: border-color .3s cubic-bezier(.25, .01, .25, 1) 0s, color .3s cubic-bezier(.25, .01, .25, 1) 0s, background .2s cubic-bezier(.25, .01, .25, 1) 0s;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: .3rem;
+    font-size: .9rem;
+    font-weight: bold;
+    color: #05060f99;
+    transition: color .3s cubic-bezier(.25, .01, .25, 1) 0s;
+}
+
+.input:hover,
+.input:focus {
+    border-color: #05060f;
+    outline: none;
+}
+
+.input-group:hover .label,
+.input:focus .label {
+    color: #05060fc2;
+}
+
+.form__fields {
+    width: 100%;
+}
+
+.checkout__form-btn {
+    background-color: #a81515;
+    width: 250px;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    transition: 0.3s all;
+}
+
+.checkout__form-btn:hover {
+    background-color: #e50d0d;
+}
+
+.checkout__holder-products {
+    width: 30%;
+}
+
+@media (max-width: 768px) {
+    .checkout__holder {
+        flex-wrap: wrap;
+    }
+    .checkout__holder-products {
+        width: 70%;
+    }
+    .checkout__form {
+        width: 70%;
+    }
+}

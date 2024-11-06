@@ -25,6 +25,9 @@
         <?php $view->component("breadcrumb") ?>
         <section class="product-details">
             <div class="container product-details__container">
+                <?php $view->component("success", [
+                    "sessionKey" => "success"
+                ]); ?>
                 <div class="product-details__inner">
                     <div class="product-details__slides product-images">
                         <div class="swiper product-swiper">

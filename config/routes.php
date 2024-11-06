@@ -36,6 +36,9 @@ use App\Controllers\Catalog\IndexCatalogController;
 use App\Controllers\Catalog\ShowCatalogController;
 use App\Controllers\Cart\StoreCartController;
 use App\Controllers\Contacts\StoreContactsController;
+use App\Controllers\Cart\UpdateCartController;
+use App\Controllers\Checkout\IndexCheckoutController;
+use App\Controllers\Checkout\StoreCheckoutController;
 
 return [
         Route::get("/", [IndexController::class, "index"]),
@@ -55,6 +58,10 @@ return [
         Route::post("/contacts", [StoreContactsController::class,"store"]),
         Route::get("/shopping-cart",[IndexCartController::class, "index"]),
         Route::post("/shopping-cart/add",[StoreCartController::class, "store"], [AuthMiddleware::class]),
+        Route::post("/shopping-cart/remove", [UpdateCartController::class, "remove"], [AuthMiddleware::class]),
+        Route::post("/shopping-cart/change-quantity", [UpdateCartController::class, "updateQuantity"], [AuthMiddleware::class]),
+        Route::get("/checkout-order",[IndexCheckoutController::class, "index"], [AuthMiddleware::class]),
+        Route::post("/checkout-order",[StoreCheckoutController::class, "store"], [AuthMiddleware::class]),
 
         Route::get("/profile", [IndexProfileDataController::class, "index"], [AuthMiddleware::class]),
         Route::post("/profile", [UpdateProfileDataController::class, "update"], [AuthMiddleware::class]),

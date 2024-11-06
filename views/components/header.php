@@ -2,6 +2,7 @@
 /**
  * @var \App\Kernel\Auth\AuthInterface $auth
  * @var \App\Kernel\Session\SessionInterface $session
+ * @var string $activeMenu
  */
 
 $user = $auth->user();
@@ -30,16 +31,16 @@ $user = $auth->user();
             <nav class="nav header__nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a class="nav__link nav__link--current" href="/">Hlavní</a>
+                        <a class="nav__link <?php echo $activeMenu === 'hlavni' ? 'nav__link--current' : '' ?>" href="/">Hlavní</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="/catalog">Katalog</a>
+                        <a class="nav__link <?php echo $activeMenu === 'katalog' ? 'nav__link--current' : '' ?>"" href="/catalog">Katalog</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="/about">O nás</a>
+                        <a class="nav__link <?php echo $activeMenu === 'onas' ? 'nav__link--current' : '' ?>"" href="/about">O nás</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="/contacts">Kontakty</a>
+                        <a class="nav__link <?php echo $activeMenu === 'kontakty' ? 'nav__link--current' : '' ?>"" href="/contacts">Kontakty</a>
                     </li>
                 </ul>
             </nav>

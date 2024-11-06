@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Kernel\Database\DatabaseInterface;
 use App\Models\Order;
+use App\Models\Product;
+
 
 class OrderService
 {
@@ -34,6 +36,30 @@ class OrderService
         }, $orders);
 
         return  $orders;
+    }
+
+    public function getUserOrders(int $userId, int $status){
+        $userOrders = $this->db->get("objednavka_obchodu", [
+            "id_zakaznik" => $userId,
+            "stav" => 1
+        ]);
+        $userOrders =  array_map(function ($order) {
+            return new Order(
+                $order["id"],
+                $order["id_zakaznik"],
+                $order["cele_jmeno"],
+                $order["telefon"],
+                $order["mesto"],
+                $order["psc"],
+                $order["ulice"],
+                $order["cislo_domu"],
+                $order["stav"],
+                $order["cena"],
+                $order["datum"],
+            );
+        }, $userOrders);
+
+        return  $userOrders;
     }
 
     public function insert(array $data){
@@ -120,6 +146,44 @@ class OrderService
 
     public function findProductInOrder(int $orderId, int $productId) {
         return $this->db->first("objednavka_produkt", [
+            "id_objednavka" => $orderId,
+            "id_prvek_produkt" => $productId
+        ]);
+    }
+
+    public function getProductsInOrder(int $orderId){
+        $orderProducts = $this->db->get("objednavka_produkt", [
+            "id_objednavka" => $orderId
+        ]);
+        $products = [];
+
+        foreach ($orderProducts as $orderProduct) {
+            $productDetails = $this->db->first("produkt", [
+                "id" => $orderProduct["id_prvek_produkt"]
+            ]);
+            if ($productDetails) {
+                $products[] =  new Product(
+                    $productDetails["id"],
+                    $productDetails["nazev"],
+                    $productDetails["kod"],
+                    $productDetails["obrazek"],
+                    $productDetails["cena"],
+                    $productDetails["popis"],
+                    $productDetails["dostupnost"],
+                    $productDetails["mnozstvi"],
+                    $productDetails["created_at"],
+                    $productDetails["updated_at"],
+                    $orderProduct["mnozstvi"]
+                );
+            }
+        }
+
+        return $products;
+    }
+
+    public function removeProductFromOrder(int $orderId, int $productId){
+        return $this->db->delete("objednavka_produkt",
+        [
             "id_objednavka" => $orderId,
             "id_prvek_produkt" => $productId
         ]);

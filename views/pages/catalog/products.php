@@ -22,7 +22,9 @@
 
 <body>
 <div class="wrapper">
-    <?php $view->component("header") ?>
+    <?php $view->component("header",[
+            "activeMenu" => "katalog"
+    ]) ?>
     <main class="main">
         <?php $view->component("breadcrumb") ?>
         <section class="catalog-grid">
@@ -35,7 +37,7 @@
                                 <input type="checkbox" name="available" id="available" />
                                 <label for="available">Skladem</label>
                             </form>
-                            <span class="catalog-props__quantity"> 249 produktů </span>
+                            <span class="catalog-props__quantity">Celkem: <?php echo count($products)?> produktů </span>
                         </div>
 
                         <form action="#" method="GET">
@@ -53,6 +55,9 @@
                             </select>
                         </form>
                     </div>
+                    <?php $view->component("success", [
+                            "sessionKey" => "success"
+                    ]); ?>
                 </div>
                 <ul class="catalog-grid__list catalog-list">
                     <?php foreach ($products as $index => $product) { ?>

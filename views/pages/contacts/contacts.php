@@ -12,7 +12,9 @@
 ]) ?>
 <body>
 <div class="wrapper">
-    <?php $view->component("header") ?>
+    <?php $view->component("header", [
+            "activeMenu" => "kontakty"
+    ]) ?>
     <main class="main">
         <section class="breadcrumb-banner breadcrumb-banner--contacts">
             <div class="container breadcrumb__container">
