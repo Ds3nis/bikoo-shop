@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\Kernel\View\View $view
+ * @var array<\App\Models\Product> $newProducts
  */
 ?>
 <?php $view->component("head"); ?>
@@ -10,6 +11,12 @@
             "activeMenu" => "hlavni"
         ]) ?>
       <main class="main">
+          <div id="videoModal" class="modal">
+              <div class="modal-content">
+                  <span class="close" onclick="closeModal()">&times;</span>
+                  <iframe src="https://www.youtube.com/embed/U9AnEaC1J8k?si=1T56OFe3qOaEK3kI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+          </div>
         <section class="hero">
           <h1 class="visually-hidden">Main slider</h1>
 
@@ -17,35 +24,16 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
               <!-- Slides -->
-              <div
-                class="swiper-slide mainSwiper-slide"
-                style="background-image: url(assets/img/Slider-01.png)"
-                    >
+              <div class="swiper-slide mainSwiper-slide" style="background-image: url(assets/img/Slider-01.png)">
                 <div class="hero__content content">
                   <span class="hero__tag">Vše nové</span>
                   <h2 class="hero__title">Mountain Jízdní kolo</h2>
                   <p class="hero__descr">Šíleně lehké, šíleně rychlé</p>
-                  <a class="hero__catalog" href="#">Všechna kola</a>
-                  <div class="hero__links">
-                    <img src="assets/img/play.png" alt="play" />
-                    <a class="hero__video video" href="#">Přehrát video</a>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="swiper-slide mainSwiper-slide"
-                style="background-image: url(assets/img/Slider-01.png)"
-                    >
-                <div class="hero__content content">
-                  <span class="hero__tag">Vše nové</span>
-                  <h2 class="hero__title">Mountain Jízdní kolo</h2>
-                  <p class="hero__descr">Šíleně lehké, šíleně rychlé</p>
-
-                  <a class="hero__catalog" href="#">Všechna kola</a>
-                  <div class="hero__links">
-                    <img src="assets/img/play.png" alt="play" />
-                    <a class="hero__video video" href="#">Přehrát video</a>
-                  </div>
+                  <a class="hero__catalog" href="/catalog">Všechna kola</a>
+                    <div class="hero__links">
+                        <img src="assets/img/play.png" alt="play" />
+                        <button class="hero__video video btn-reset" onclick="openModal()">Přehrát video</button>
+                    </div>
                 </div>
               </div>
               <!-- If we need navigation buttons -->
@@ -96,20 +84,24 @@ Nová kola Monster v našem obchodě pro vás
             <div class="bike-coming__right">
               <div class="swiper bikeComing">
                 <div class="swiper-wrapper">
+                    <?php foreach ($newProducts as $newProduct) { ?>
                   <div class="swiper-slide bikeComing-slide">
                     <article class="product">
+                        <?php
+                        $images = explode('|', $newProduct->images());
+                        $imagesPath = array_filter($images);
+                        ?>
                       <img
                         class="product__img"
-                        src="assets/img/coming-bike1.png"
-                        alt="bike1"
-                            />
+                        src="<?php echo $imagesPath[0]?>"
+                        alt="<?php echo $newProduct->name() ?>"
+                      />
                       <div class="product__description">
-                        <h3 class="product__title">Sarrio Mc 002</h3>
+                        <h3 class="product__title"><?php echo $newProduct->name() ?> </h3>
                         <p class="product__dsc">
-Speciální silniční kolo s odpružením z uhlíkových
-                          vláken
-                          </p>
-                        <a class="product__view cloud-btn" href="#">
+                            <?php echo $newProduct->shortDescription() ?>
+                        </p>
+                        <a class="product__view cloud-btn" href="/catalog/product/?id=<?php echo $newProduct->id() ?>">
                           <nav>
                             <ul class="cloud-btn__list">
                               <li class="cloud-btn__item cloud-btn__item--red">
@@ -125,64 +117,7 @@ PŘEHLED
                       </div>
                     </article>
                   </div>
-                  <div class="swiper-slide bikeComing-slide">
-                    <article class="product">
-                      <img
-                        class="product__img"
-                        src="assets/img/coming-bike1.png"
-                        alt="bike1"
-                            />
-                      <div class="product__description">
-                        <h3 class="product__title">Sarrio Mc 002</h3>
-                        <p class="product__dsc">
-Speciální silniční kolo s odpružením z uhlíkových
-                          vláken
-                          </p>
-                        <a class="product__view cloud-btn" href="#">
-                          <nav>
-                            <ul class="cloud-btn__list">
-                              <li class="cloud-btn__item cloud-btn__item--red">
-PŘEHLED
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                              </li>
-                            </ul>
-                          </nav>
-                        </a>
-                      </div>
-                    </article>
-                  </div>
-                  <div class="swiper-slide bikeComing-slide">
-                    <article class="product">
-                      <img
-                        class="product__img"
-                        src="assets/img/coming-bike2.png"
-                        alt="bike2"
-                            />
-                      <div class="product__description">
-                        <h3 class="product__title">Gyanno Mt 22</h3>
-                        <p class="product__dsc">
-Speciální silniční kolo s odpružením z uhlíkových
-                          vláken
-                          </p>
-                        <a class="product__view cloud-btn" href="#">
-                          <nav>
-                            <ul class="cloud-btn__list">
-                              <li class="cloud-btn__item cloud-btn__item--red">
-PŘEHLED
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                              </li>
-                            </ul>
-                          </nav>
-                        </a>
-                      </div>
-                    </article>
-                  </div>
+                    <?php } ?>
                 </div>
               </div>
             </div>
@@ -208,5 +143,31 @@ Máte nápad nebo projekt, pojďme spolupracovat a vytvořit něco
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/burger.js"></script>
+    <script>
+        // Функція для відкриття модального вікна та завантаження відео
+        function openModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('youtubeVideo');
+
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('youtubeVideo');
+
+            modal.style.display = "none";
+            video.src = " ";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            window.onclick = function(event) {
+                const modal = document.getElementById('videoModal');
+                if (event.target === modal) {
+                    closeModal();
+                }
+            }
+        });
+    </script>
   </body>
 </html>

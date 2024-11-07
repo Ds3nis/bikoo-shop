@@ -3,6 +3,7 @@
 namespace App\Kernel\Router;
 
 use App\Kernel\Auth\AuthInterface;
+use App\Kernel\Config\ConfigInterface;
 use App\Kernel\Database\DatabaseInterface;
 use App\Kernel\Http\Redirect;
 use App\Kernel\Http\RedirectInterface;
@@ -29,7 +30,8 @@ class Router implements RouterInterface
         private RedirectInterface $redirect,
         private SessionInterface  $session,
         private DatabaseInterface $database,
-        private AuthInterface $auth
+        private AuthInterface $auth,
+        private ConfigInterface $config,
     ){
         $this->initRoutes();
     }
@@ -74,6 +76,7 @@ class Router implements RouterInterface
                 call_user_func([$controller, "setSession"], $this->session);
                 call_user_func([$controller, "setDatabase"], $this->database);
                 call_user_func([$controller, "setAuth"], $this->auth);
+                call_user_func([$controller, "setConfig"], $this->config);
             }
 
 

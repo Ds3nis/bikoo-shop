@@ -15,8 +15,8 @@ class ProductService
      * @return array<Product>
      *
      */
-    public function all() : array{
-        $products = $this->db->get("produkt");
+    public function all(array $order = [], int $limit = -1) : array{
+        $products = $this->db->get("produkt", [], $order, $limit);
         $products =  array_map(function ($product) {
             return new Product(
                 $product["id"],
@@ -44,6 +44,7 @@ class ProductService
 
         return true;
     }
+
 
     public function find(int $id) : ?Product{
         $product = $this->db->first("produkt",[

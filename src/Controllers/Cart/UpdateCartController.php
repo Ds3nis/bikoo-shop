@@ -45,6 +45,7 @@ class UpdateCartController extends Controller
             ]);
         }
 
+        $this->session()->set("productCount", count($service->getProductsInOrder($orderId)));
         return $this->redirect("/shopping-cart");
     }
 
@@ -64,7 +65,8 @@ class UpdateCartController extends Controller
         $service->update($orderId, [
             "cena" => ($order->price() - $product["cena"])
         ]);
-
+        $this->session()->remove("productCount");
+        $this->session()->set("productCount", count($service->getProductsInOrder($orderId)));
         return $this->redirect("/shopping-cart");
     }
 }

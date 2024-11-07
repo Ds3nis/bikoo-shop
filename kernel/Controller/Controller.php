@@ -3,6 +3,7 @@
 namespace App\Kernel\Controller;
 
 use App\Kernel\Auth\AuthInterface;
+use App\Kernel\Config\ConfigInterface;
 use App\Kernel\Database\DatabaseInterface;
 use App\Kernel\Http\Redirect;
 use App\Kernel\Http\RedirectInterface;
@@ -35,6 +36,24 @@ abstract class Controller
     public function setAuth(AuthInterface $auth): void
     {
         $this->auth = $auth;
+    }
+
+    private ConfigInterface $config;
+
+    /**
+     * @return ConfigInterface
+     */
+    public function config(): ConfigInterface
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param ConfigInterface $cofig
+     */
+    public function setConfig(ConfigInterface $config): void
+    {
+        $this->config = $config;
     }
 
 

@@ -6,10 +6,13 @@
 
 ?>
 <?php $view->component("head", [
+        "title" => "Bikoo|Kontakty",
         "styles" => [
                 "assets/css/breadcrumb-banner.css",
-        ]
-]) ?>
+        ],
+        'bootstrap' => [
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        ]]); ?>
 <body>
 <div class="wrapper">
     <?php $view->component("header", [
@@ -45,7 +48,14 @@
                             <h4 class="contact__desc">
                                 Máte-li jakékoli dotazy nebo potřebujete-li další informace,
                                 napište nám zprávu pomocí níže uvedeného formuláře.
+
                             </h4>
+                            <?php $view->component("success", [
+                                    "sessionKey" => "mailSuccess"
+                            ]) ?>
+                            <?php $view->component("success", [
+                                "sessionKey" => "mailError"
+                            ]) ?>
                         </div>
                         <form
                             class="form-container contact__form"
@@ -71,7 +81,15 @@
                                         placeholder="Vaše přijmení"
                                     />
                                 </div>
-
+                                <div class="input-container">
+                                    <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            required=""
+                                            placeholder="Email"
+                                    />
+                                </div>
                                 <div class="input-container">
                                     <input
                                         type="text"
@@ -129,6 +147,8 @@
     </main>
     <?php $view->component("footer") ?>
 </div>
-<script defer src="../js/burger.js"></script>
+<script defer src="assets/js/burger.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -58,6 +58,7 @@
                     <?php $view->component("success", [
                             "sessionKey" => "success"
                     ]); ?>
+
                 </div>
                 <ul class="catalog-grid__list catalog-list">
                     <?php foreach ($products as $index => $product) { ?>
@@ -146,5 +147,7 @@
     <?php $view->component("footer") ?>
 </div>
 <script defer src="assets/js/burger.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

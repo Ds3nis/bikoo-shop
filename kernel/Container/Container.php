@@ -56,7 +56,8 @@ class Container
             $this->redirect,
             $this->session,
             $this->database,
-            $this->auth
+            $this->auth,
+            $this->config,
         );
 
     }

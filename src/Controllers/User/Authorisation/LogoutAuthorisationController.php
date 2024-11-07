@@ -12,6 +12,10 @@ class LogoutAuthorisationController extends Controller
         if (!is_null($this->session()->get("order_id"))){
             $this->session()->remove("order_id");
         }
+
+        if (!is_null($this->session()->get("productCount"))){
+            $this->session()->remove("productCount");
+        }
         $this->redirect("/");
     }
 

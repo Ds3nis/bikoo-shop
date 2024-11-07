@@ -32,7 +32,10 @@
                         ]) ?>
                         <div class="account__content account-content">
                             <div class="container">
-                                <?php foreach ($orders as $order) {?>
+
+                                <?php
+                                if (count($orders) > 0) {
+                                    foreach ($orders as $order) {?>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card mb-5">
@@ -111,11 +114,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php }}else{ ?>
+                                <div class="account-content__title">
+                                    <p>Zatím nemáte žádné objednávky</p>
+                                </div>
                                 <?php } ?>
                             </div>
-                            <!--                            <div class="account-content__title">-->
-                            <!--                              <p>Zatím nemáte žádné objednávky</p>-->
-                            <!--                            </div>-->
+
                         </div>
                     </div>
                 </div>

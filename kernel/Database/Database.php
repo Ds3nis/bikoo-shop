@@ -101,7 +101,7 @@ class Database implements DatabaseInterface
 
     }
 
-    public function get(string $table, array $conditions = []): ?array
+    public function get(string $table, array $conditions = [], array $order = [], int $limit = -1): ?array
     {
         $where = '';
 
@@ -109,7 +109,17 @@ class Database implements DatabaseInterface
             $where = 'WHERE ' . implode(" AND ", array_map(fn($field) => "$field = :$field", array_keys($conditions)));
         }
 
+
         $sql = "SELECT * FROM $table $where";
+        if (count($order) > 0){
+            $sql .= ' ORDER BY '.implode(", ", array_map(fn($field, $direction) => "$field $direction", array_keys($order), $order));
+        }
+
+        if ($limit > 0){
+            $sql .= " LIMIT {$limit}";
+        }
+
+
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute($conditions);

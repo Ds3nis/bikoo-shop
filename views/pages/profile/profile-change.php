@@ -105,7 +105,7 @@
     </main>
     <?php $view->component("footer") ?>
 </div>
-<script defer src="../js/burger.js"></script>
+<script defer src="assets/js/burger.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

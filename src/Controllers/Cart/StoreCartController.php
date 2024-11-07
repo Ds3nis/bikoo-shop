@@ -69,6 +69,8 @@ class StoreCartController extends Controller
             "cena" => $updatedTotalPrice
         ]);
 
+        $this->session()->set("productCount", count($service->getProductsInOrder($orderId)));
+
         $this->session()->set("success", "Produkt byl úspěšně přidán do košíku");
 
         if (is_null($request->input("counter"))){

@@ -3,8 +3,7 @@
 namespace App\Kernel;
 
 use App\Kernel\Container\Container;
-use App\Kernel\Http\Request;
-use App\Kernel\Router\Router;
+
 
 class App
 {
@@ -13,7 +12,7 @@ class App
     $this->container = new Container();
     }
 
-    public function run(){
+    public function run() : void{
 
 
 

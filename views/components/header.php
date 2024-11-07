@@ -6,6 +6,7 @@
  */
 
 $user = $auth->user();
+
 ?>
 
 <header class="header">
@@ -109,7 +110,7 @@ $user = $auth->user();
                                 fill="white"
                             />
                         </svg>
-                        <span class="profile-menu__quantity">40</span>
+                        <span class="profile-menu__quantity"> <?php echo $session->has("productCount") ? $session->get("productCount") : 0; ?></span>
                     </a>
                 </li>
             </ul>
