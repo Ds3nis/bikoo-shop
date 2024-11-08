@@ -438,7 +438,7 @@ svg {
     cursor: pointer;
 }
 
-.modal .iframe {
+.swiper-video {
     width: 800px;
     height: 500px;
     border: none;

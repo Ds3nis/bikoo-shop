@@ -14,7 +14,7 @@
           <div id="videoModal" class="modal">
               <div class="modal-content">
                   <span class="close" onclick="closeModal()">&times;</span>
-                  <iframe src="https://www.youtube.com/embed/U9AnEaC1J8k?si=1T56OFe3qOaEK3kI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  <iframe class="swiper-video" src="https://www.youtube.com/embed/U9AnEaC1J8k?si=1T56OFe3qOaEK3kI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
               </div>
           </div>
         <section class="hero">

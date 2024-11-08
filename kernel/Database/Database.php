@@ -101,7 +101,7 @@ class Database implements DatabaseInterface
 
     }
 
-    public function get(string $table, array $conditions = [], array $order = [], int $limit = -1): ?array
+    public function get(string $table, array $conditions = [], array $order = [], int $limit = -1, int $offset = 0): ?array
     {
         $where = '';
 
@@ -117,6 +117,10 @@ class Database implements DatabaseInterface
 
         if ($limit > 0){
             $sql .= " LIMIT {$limit}";
+        }
+
+        if ($offset > 0){
+            $sql .= " OFFSET {$offset}";
         }
 
 

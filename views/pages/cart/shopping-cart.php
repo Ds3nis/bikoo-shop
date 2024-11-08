@@ -56,7 +56,6 @@
                                 <table class="table table-hover table-bordered m-0">
                                     <thead>
                                     <tr>
-                                        <!-- Set columns width -->
                                         <th
                                             class="text-center py-3 px-4"
                                             style="min-width: 400px"
@@ -92,71 +91,62 @@
                                     <tbody>
                                     <?php foreach ($products as $product) {?>
                                         <tr>
-                                        <td class="p-4">
-                                            <div class="d-flex align-items-center gap-5 media align-items-center">
-                                                <?php
-                                                $images = explode('|', $product->images());
-                                                $imagesPath = array_filter($images);
-                                                ?>
-                                                <img
-                                                        src="<?php echo $imagesPath[0] ?>"
-                                                        class="d-block ui-bordered mr-4"
-                                                        alt=""
-                                                        style="width: 50%; height: 250px; object-fit: cover;"
-                                                />
-                                                <div class="media-body">
-                                                    <a href="/catalog/product/?id=<?php echo $product->id() ?>" class="d-block text-dark">
-                                                        <?php echo $product->name()?>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">
-                                            <?php  echo $product->price()?> CZK
-                                        </td>
-                                        <td class="align-middle p-4">
-                                            <div class="cart-container">
-                                                <form action="/shopping-cart/change-quantity" method="post">
-                                                    <div class="cart-quantity">
-                                                        <input type="hidden" name="product_id" value="<?php echo $product->id() ?>" />
-                                                        <button type="submit" name="action" value="decrease" class="btn-reset minus-btn">-</button>
-                                                        <input
-                                                                type="number"
-                                                                name="quantity"
-                                                                value="<?php echo $product->countInOrder()?>"
-                                                                class="quantity"
-                                                                readonly=""
-                                                                min="1"
-                                                        />
-                                                        <button type="submit" name="action" value="increase" class="btn-reset plus-btn">+</button>
+                                            <td class="p-4">
+                                                <div class="d-flex align-items-center gap-5 media align-items-center">
+                                                    <?php
+                                                    $images = explode('|', $product->images());
+                                                    $imagesPath = array_filter($images);
+                                                    ?>
+                                                    <img
+                                                            src="<?php echo $imagesPath[0] ?>"
+                                                            class="d-block ui-bordered mr-4"
+                                                            alt=""
+                                                            style="width: 50%; height: 250px; object-fit: cover;"
+                                                    />
+                                                    <div class="media-body">
+                                                        <a href="/catalog/product/?id=<?php echo $product->id() ?>" class="d-block text-dark">
+                                                            <?php echo $product->name()?>
+                                                        </a>
                                                     </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right font-weight-semibold align-middle p-4">
+                                                <?php  echo $product->price()?> CZK
+                                            </td>
+                                            <td class="align-middle p-4">
+                                                <div class="cart-container">
+                                                    <form action="/shopping-cart/change-quantity" method="post">
+                                                        <div class="cart-quantity">
+                                                            <input type="hidden" name="product_id" value="<?php echo $product->id() ?>" />
+                                                            <button type="submit" name="action" value="decrease" class="btn-reset minus-btn">-</button>
+                                                            <input
+                                                                    type="number"
+                                                                    name="quantity"
+                                                                    value="<?php echo $product->countInOrder()?>"
+                                                                    class="quantity"
+                                                                    readonly=""
+                                                                    min="1"
+                                                            />
+                                                            <button type="submit" name="action" value="increase" class="btn-reset plus-btn">+</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td class="text-right font-weight-semibold align-middle p-4">
+                                                <?php echo $product->price() * $product->countInOrder() ?> CZK
+                                            </td>
+                                            <td class="text-center align-middle px-0">
+                                                <form action="/shopping-cart/remove" method="post">
+                                                    <input type="hidden" name="product_id" value="<?php echo $product->id() ?>" />
+                                                    <button type="submit" class="shop-tooltip float-none text-danger">×</button>
                                                 </form>
-                                            </div>
-                                        </td>
-                                        <td class="text-right font-weight-semibold align-middle p-4">
-                                            <?php echo $product->price() * $product->countInOrder() ?> CZK
-                                        </td>
-                                        <td class="text-center align-middle px-0">
-                                            <form action="/shopping-cart/remove" method="post">
-                                                <input type="hidden" name="product_id" value="<?php echo $product->id() ?>" />
-                                                <button type="submit" class="shop-tooltip close float-none text-danger">×</button>
-                                            </form>
-<!--                                            <a-->
-<!--                                                href="#"-->
-<!--                                                class="shop-tooltip close float-none text-danger"-->
-<!--                                                title=""-->
-<!--                                                data-original-title="Remove"-->
-<!--                                            >×</a-->
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                     <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- / Shopping cart table -->
-                            <div
-                                class="d-flex flex-wrap justify-content-end align-items-center pb-4"
-                            >
+                            <div class="d-flex flex-wrap justify-content-end align-items-center pb-4">
                                 <div class="d-flex">
                                     <div class="text-right mt-4">
                                         <label class="text-muted font-weight-normal m-0"

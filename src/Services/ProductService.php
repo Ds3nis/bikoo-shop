@@ -15,8 +15,8 @@ class ProductService
      * @return array<Product>
      *
      */
-    public function all(array $order = [], int $limit = -1) : array{
-        $products = $this->db->get("produkt", [], $order, $limit);
+    public function all(array $conditions = [], array $order = [], int $limit = -1, int $offset = 0) : array{
+        $products = $this->db->get("produkt", $conditions, $order, $limit, $offset);
         $products =  array_map(function ($product) {
             return new Product(
                 $product["id"],
@@ -34,6 +34,8 @@ class ProductService
 
         return  $products;
     }
+
+
 
     public function insert(array $data){
         $result = $this->db->insert("produkt", $data);

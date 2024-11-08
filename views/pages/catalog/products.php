@@ -5,6 +5,7 @@
  * @var \App\Kernel\Session\SessionInterface $session
  * @var \App\Kernel\Auth\AuthInterface $auth
  * @var array<\App\Models\Product> $products
+ * @var string $pagination
  */
 
 ?>
@@ -33,26 +34,34 @@
                     <div class="catalog-props__top">
                         <div class="catalog-props__available">
                             <span class="catalog-props__txt">Dostupnost:</span>
-                            <form class="catalog-props__form" action="#" method="GET">
-                                <input type="checkbox" name="available" id="available" />
+                            <form class="catalog-props__form" action="/catalog" method="GET">
+                                <input type="checkbox" name="available" id="available" value="1"
+                                    <?php echo isset($_GET['available']) ? 'checked' : ''; ?>
+                                       onchange="this.form.submit()" />
                                 <label for="available">Skladem</label>
+
+                                <?php
+
+                                if (isset($_GET['sort_by'])) {
+                                    echo '<input type="hidden" name="sort_by" value="' . htmlspecialchars($_GET['sort_by']) . '">';
+                                }
+                                ?>
                             </form>
                             <span class="catalog-props__quantity">Celkem: <?php echo count($products)?> produktů </span>
                         </div>
 
-                        <form action="#" method="GET">
-                            <select
-                                class="catalog-props__sort"
-                                name="sort_by"
-                                id="sort_by"
-                            >
-                                <option class="selected" selected value="0">
-                                    Seřadit podle
-                                </option>
-                                <option value="1">No Wrapper</option>
-                                <option value="2">No JS</option>
-                                <option value="3">Nice!</option>
+                        <form id="sortForm" action="/catalog" method="GET">
+                            <select class="catalog-props__sort" name="sort_by" id="sort_by" onchange="document.getElementById('sortForm').submit()">
+                                <option class="selected" selected value=""> Seřadit podle: </option>
+                                <option value="alphabetical" <?php echo (isset($_GET['sort_by']) && $_GET['sort_by'] == 'alphabetical') ? 'selected' : ''; ?>>Alfabeticky</option>
+                                <option value="price_asc" <?php echo (isset($_GET['sort_by']) && $_GET['sort_by'] == 'price_asc') ? 'selected' : ''; ?>>Cena: vzestupně</option>
+                                <option value="price_desc" <?php echo (isset($_GET['sort_by']) && $_GET['sort_by'] == 'price_desc') ? 'selected' : ''; ?>>Cena: sestupně</option>
                             </select>
+                            <?php
+                            if (isset($_GET['available'])) {
+                                echo '<input type="hidden" name="available" value="1">';
+                            }
+                            ?>
                         </form>
                     </div>
                     <?php $view->component("success", [
@@ -123,23 +132,7 @@
                     <?php } ?>
                 </ul>
                 <div class="catalog-grid__pagination pagination">
-                    <nav aria-label="...">
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#"
-                                >2 <span class="sr-only"></span
-                                    ></a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <?php echo $pagination?>
                 </div>
             </div>
         </section>
