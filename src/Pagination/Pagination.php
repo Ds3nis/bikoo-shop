@@ -65,7 +65,8 @@ class Pagination
 
         // Стрілка «назад»
         if ($this->current_page > 1) {
-            $back = "<li class='page-item'><a class='page-link' href='" . $this->getLink($this->current_page - 1) . "'>&lt;</a></li>";
+            $back ="<li class='page-item'><a class='page-link' href='" . $this->getLink($this->current_page - 1) . "'>&lt;</a></li>";
+//                "<li class='page-item'><a class='page-link' href='" . $this->getLink($this->current_page - 1) . "'>&lt;</a></li>";
         }
 
         // Стрілка «вперед»

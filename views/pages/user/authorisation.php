@@ -5,7 +5,12 @@
  */
 ?>
 <?php
-$view->component("head");
+$view->component("head", [
+        'title' => "Bikoo|Autorizace",
+        'bootstrap' => [
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        ]
+]);
 
 ?>
 <body>
@@ -21,6 +26,9 @@ $view->component("head");
                         </div>
                         <form class="form-container" action="/authorisation" method="post">
                             <div class="form-fields">
+                                <?php $view->component("success", [
+                                        "sessionKey" => "reset-success"
+                                ]); ?>
                                 <?php if($session->has("login-error")) { ?>
                                     <div class="text-danger" style="color: red; margin: 10px 0;">
                                         <p><?php echo $session->getFlash("login-error")?></p>
@@ -46,7 +54,7 @@ $view->component("head");
                                     />
                                     <div class="highlight"></div>
                                 </div>
-                                <a href="#" class="form__link">
+                                <a href="/forgot-password" class="form__link">
                                     <p class="form__link-pass">Zapomněli jste heslo?</p>
                                 </a>
                                 <button class="form__button cloud-btn" type="submit">

@@ -25,9 +25,11 @@
 <div class="wrapper">
     <?php $view->component("header",[
             "activeMenu" => "katalog"
-    ]) ?>
+    ]); ?>
     <main class="main">
-        <?php $view->component("breadcrumb") ?>
+        <?php $view->component("breadcrumb", [
+                "title" => "Jízdní kola"
+        ]); ?>
         <section class="catalog-grid">
             <div class="container catalog-grid__container">
                 <div class="catalog-grid__props catalog-props">
@@ -68,6 +70,9 @@
                             "sessionKey" => "success"
                     ]); ?>
 
+                    <?php $view->component("error", [
+                        "sessionKey" => "not_available"
+                    ]); ?>
                 </div>
                 <ul class="catalog-grid__list catalog-list">
                     <?php foreach ($products as $index => $product) { ?>

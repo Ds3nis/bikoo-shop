@@ -2,6 +2,7 @@
 /**
  * @var \App\Kernel\View\View $view
  * @var \App\Models\User $user
+ * @var \App\Kernel\Auth\AuthInterface $auth
  */
 ?>
 <?php
@@ -33,6 +34,9 @@ $view->include("main");
                     <h3 class="card-title">Upravit uživatelský účet <?php echo $user->id()?></h3></div>
                 <?php $view->include("success-alert", [
                     "sessionKey" => "updated"
+                ]); ?>
+                <?php $view->include("fail-alert", [
+                    "sessionKey" => "no_rights"
                 ]); ?>
                 <form action="admin/update/?id=<?php echo  $user->id() ?>" enctype="multipart/form-data"
                       method="POST">
@@ -73,14 +77,23 @@ $view->include("main");
                         </div>
                         <div class="form-group">
                             <label for="role">Změnit roli</label>
-                            <select required class="form-control" name="role" id="role">
+                            <select
+                                    required
+                                    class="form-control"
+                                    name="role"
+                                    id="role"
+                                <?php echo ($auth->user()->role() < 3) ? 'disabled' : ''; ?>
+                            >
                                 <option disabled>Role</option>
                                 <option value="1" <?php echo $user->role() == 1 ? 'selected' : ''; ?>>Zákazník</option>
                                 <option value="2" <?php echo $user->role() == 2 ? 'selected' : ''; ?>>Admin</option>
                                 <option value="3" <?php echo $user->role() == 3 ? 'selected' : ''; ?>>SuperAdmin</option>
                             </select>
-
+                            <?php if ($auth->user()->role() < 3): ?>
+                                <small class="form-text text-danger">Nemáte oprávnění měnit roli.</small>
+                            <?php endif; ?>
                         </div>
+
                         <div class="card">
                             <button type="submit" class="btn btn-primary">Uložit změny</button>
                         </div>

@@ -59,21 +59,26 @@ a {
   border-bottom: 1px solid #ededed;
   transition: all 0.3s ease;
 
-  &:hover {
-    background-color: #ededed;
 
-    .account-menu__link {
-      color: #ea0129;
-    }
-  }
+
+
 }
+
+.account-menu__item:hover {
+  background-color: #ededed;
+}
+
+.account-menu__item:hover .account-menu__link {
+  color: #ea0129;
+}
+
 
 .section--active {
   background-color: #ededed;
+}
 
-  a {
-    color: #ea0129;
-  }
+.section--active a{
+  color: #ea0129;
 }
 
 .account-menu__img {
@@ -123,15 +128,16 @@ a {
   font-size: 18px;
   background-color: #349f42;
   padding: 10px;
-
-  span {
-    color: white;
-  }
-
-  &:hover {
-    background-color: #46be57;
-  }
 }
+
+.account-content__title-link span{
+  color: white;
+}
+
+.account-content__title-link:hover{
+  background-color: #46be57;
+}
+
 
 .form-container {
   display: flex;
@@ -168,11 +174,11 @@ a {
 .input_change {
   background-color: #ffffff;
   border-color: #f7f7f7;
+}
 
-  &:hover {
-    border-color: #a3a3a3;
-    outline: none;
-  }
+.input_change:hover{
+   border-color: #a3a3a3;
+   outline: none;
 }
 
 .label {
@@ -218,13 +224,13 @@ a {
   background: #4c9a9d;
   border-radius: 5px;
   outline: none;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out
+}
 
-  &:hover {
-    background-color: #427f81;
-    box-shadow: 0 8px 12px rgb(0 0 0 / 30%);
-    transform: scale(1.03);
-  }
+.form__button:hover{
+   background-color: #427f81;
+   box-shadow: 0 8px 12px rgb(0 0 0 / 30%);
+   transform: scale(1.03);
 }
 
 .change_password {
@@ -242,11 +248,12 @@ a {
   outline: none;
   transition: all 0.2s ease-in-out;
 
-  &:hover {
-    background-color: #b2021f;
-    box-shadow: 0 8px 12px rgb(0 0 0 / 30%);
-    transform: scale(1.03);
-  }
+}
+
+.change_password:hover{
+   background-color: #b2021f;
+   box-shadow: 0 8px 12px rgb(0 0 0 / 30%);
+   transform: scale(1.03);
 }
 
 .form__button_edit {
@@ -266,12 +273,12 @@ a {
   border-radius: 5px;
   outline: none;
   transition: all 0.2s ease-in-out;
+}
 
-  &:hover {
-    background-color: #1163bd;
-    box-shadow: 0 8px 12px rgb(0 0 0 / 30%);
-    transform: scale(1.03);
-  }
+.form__button_edit:hover{
+  background-color: #1163bd;
+  box-shadow: 0 8px 12px rgb(0 0 0 / 30%);
+  transform: scale(1.03);
 }
 
 .edit--active .form__button_edit {

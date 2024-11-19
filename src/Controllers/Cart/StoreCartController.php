@@ -3,6 +3,7 @@
 namespace App\Controllers\Cart;
 
 use App\Kernel\Controller\Controller;
+use App\Models\Product;
 use App\Services\OrderService;
 use App\Services\ProductService;
 
@@ -15,7 +16,21 @@ class StoreCartController extends Controller
         $productId = $request->input("product_id");
         $quantity = $request->input("counter") ?? 1;
 
-        $productPrice = $this->getProductPrice($productId);
+        $product = $this->getProduct($productId);
+
+
+        $productPrice = $product->price();
+        $productInStock = $product->count();
+
+        if ($productInStock == 0){
+            $this->session()->set("not_available", "Omlouváme se, tento produkt není skladem ");
+            if (is_null($request->input("counter"))){
+                $this->redirect("/catalog");
+            }else{
+                $this->redirect("/catalog/product/?id={$productId}");
+
+            }
+        }
 
 
         if ($this->auth()->check()) {
@@ -50,15 +65,16 @@ class StoreCartController extends Controller
         }
 
         $existingProduct = $service->findProductInOrder($orderId, $productId);
+
         if ($existingProduct) {
-            $newCount = min($existingProduct["mnozstvi"] + $quantity, 15);
+            $newCount = min($existingProduct["mnozstvi"] + $quantity, $productInStock);
             $newPrice = $productPrice * $newCount;
             $service->updateProductCount($orderId, $productId, $newPrice, $newCount);
 
             $priceDifference = $newPrice - $existingProduct["cena"];
             $updatedTotalPrice = $orderTotalPrice + $priceDifference;
         } else {
-            $count = min($quantity, 15);
+            $count = min($quantity, $productInStock);
             $newPrice = $productPrice * $count;
             $service->addProductToOrder($orderId, $productId, $newPrice, $count);
 
@@ -82,11 +98,11 @@ class StoreCartController extends Controller
 
     }
 
-    public function getProductPrice(int $product_id)
+    public function getProduct(int $product_id) : Product
     {
         $productService = new ProductService($this->db());
         $product = $productService->find($product_id);
 
-        return $product->price();
+        return $product;
     }
 }

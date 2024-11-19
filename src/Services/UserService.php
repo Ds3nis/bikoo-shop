@@ -76,6 +76,26 @@ class UserService
         return true;
     }
 
+    public function updateData(array $data, array $conditions) : bool{
+        $update = $this->db->update("zakaznik",$data, $conditions);
+
+        if (!$update){
+            return false;
+        }
+
+        return  true;
+    }
+
+    public function findData(array $conditions) : array{
+        $data = $this->db->first("zakaznik",$conditions);
+
+        if (!$data){
+            return [];
+        }
+
+        return $data;
+    }
+
     public function delete(array $data){
         $result = $this->db->delete("zakaznik", $data);
 

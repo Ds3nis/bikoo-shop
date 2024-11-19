@@ -85,7 +85,6 @@ $view->include("main");
                     <?php
                     $images = explode('|', $product->images());
                     $images = array_filter($images);
-
                     if (!empty($images)) {
                         foreach ($images as $imagePath) {
                             ?>

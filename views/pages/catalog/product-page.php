@@ -28,6 +28,10 @@
                 <?php $view->component("success", [
                     "sessionKey" => "success"
                 ]); ?>
+
+                <?php $view->component("error", [
+                    "sessionKey" => "not_available"
+                ]); ?>
                 <div class="product-details__inner">
                     <div class="product-details__slides product-images">
                         <div class="swiper product-swiper">
@@ -61,17 +65,18 @@
                         <h2 class="product-info__title"><?php echo $product->name() ?></h2>
                         <h3 class="product-info__price"><?php echo $product->price() ?> <span>Kč</span></h3>
                         <p class="product-info__description">
-                            <?php echo $product->description() ?>
+                            <?php  echo strip_tags($product->shortDescription()); ?>
                         </p>
                         <form class="product-info__form" action="/shopping-cart/add" method="post">
                             <input type="hidden" name="product_id" value="<?php echo $product->id() ?>">
-                            <h3>Množství: <span><?php echo $product->count() ?></span></h3>
+                            <h3>Množství: <span><?php echo $product->count(); ?></span></h3>
                             <div class="cart-quantity">
                                 <button type="button" class="btn-reset minus-btn">-</button>
                                 <input
                                     type="number"
                                     value="1"
                                     name="counter"
+                                    max=<?php echo $product->count(); ?>
                                     class="quantity"
                                     readonly=""
                                 />
@@ -149,6 +154,8 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/counter.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script defer src="assets/js/burger.js"></script>
 </body>
 </html>

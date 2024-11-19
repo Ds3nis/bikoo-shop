@@ -151,6 +151,14 @@ class OrderService
         ]);
     }
 
+    public function getOrderProducts(int $orderId) : array{
+        $orderProducts = $this->db->get("objednavka_produkt", [
+            "id_objednavka" => $orderId
+        ]);
+
+        return $orderProducts;
+    }
+
     public function getProductsInOrder(int $orderId){
         $orderProducts = $this->db->get("objednavka_produkt", [
             "id_objednavka" => $orderId

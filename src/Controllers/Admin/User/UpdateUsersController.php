@@ -38,7 +38,10 @@ class UpdateUsersController extends Controller
         }
 
 
-
+        if ($this->auth()->user()->role() < 3 && $this->request()->input("role") != $currentUser->role()) {
+            $this->session()->set("no_rights", "Nemáte oprávnění měnit roli.");
+            $this->redirect('/admin/edit/' . '?id=' . $user_id);
+        }
 
         $service->update($user_id,
             [

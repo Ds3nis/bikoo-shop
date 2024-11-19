@@ -24,6 +24,7 @@ class UpdateCartController extends Controller
 
         $product = $service->findProductInOrder($orderId, $productId);
         $productFull = $productService->find($productId);
+        $maxQuantity = $productFull->count();
         $order = $service->find([
             "id" => $orderId
         ]);
@@ -32,7 +33,7 @@ class UpdateCartController extends Controller
             $oldQuantity = $product["mnozstvi"];
             $oldPrice = $product["cena"];
             if ($action === "increase") {
-                $quantity = min($oldQuantity + 1, 15);
+                $quantity = min($oldQuantity + 1, $maxQuantity);
             } elseif ($action === "decrease") {
                 $quantity = max($oldQuantity - 1, 1);
             }

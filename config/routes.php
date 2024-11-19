@@ -39,6 +39,11 @@ use App\Controllers\Contacts\StoreContactsController;
 use App\Controllers\Cart\UpdateCartController;
 use App\Controllers\Checkout\IndexCheckoutController;
 use App\Controllers\Checkout\StoreCheckoutController;
+use App\Controllers\User\ForgotPass\IndexForgotPassController;
+use App\Controllers\User\ForgotPass\StoreForgotPassController;
+use App\Controllers\User\ForgotPass\IndexResetPassController;
+use App\Controllers\User\ForgotPass\UpdateForgotPassController;
+use App\Middleware\SuperAdminMiddleware;
 
 return [
         Route::get("/", [IndexController::class, "index"]),
@@ -52,6 +57,10 @@ return [
 
         Route::get("/authorisation",  [IndexAuthorisationController::class, "index"], [GuestMiddleware::class]),
         Route::post("/authorisation",  [StoreAuthorisationController::class, "store"], [GuestMiddleware::class]),
+        Route::get("/forgot-password", [IndexForgotPassController::class, "index"], [GuestMiddleware::class]),
+        Route::post("/forgot-password", [StoreForgotPassController::class, "store"], [GuestMiddleware::class]),
+        Route::get("/reset-password", [IndexResetPassController::class, "index"], [GuestMiddleware::class]),
+        Route::post("/reset-password", [UpdateForgotPassController::class, "update"], [GuestMiddleware::class]),
         Route::post("/logout",  [LogoutAuthorisationController::class, "logout"], [AuthMiddleware::class]),
 
         Route::get("/contacts", [IndexContactsController::class,"index"]),
@@ -86,11 +95,11 @@ return [
         Route::post("/admin/product/delete", [DeleteProductsController::class, "delete"], [AdminMiddleware::class]),
 
         Route::get("/admin/users", [IndexUsersController::class, "index"], [AdminMiddleware::class]),
-        Route::post("/users/", [StoreUsersController::class, "store"], [AdminMiddleware::class]),
+        Route::post("/users/", [StoreUsersController::class, "store"], [SuperAdminMiddleware::class]),
         Route::get("/admin/users/", [ShowUsersController::class, "show"], [AdminMiddleware::class]),
         Route::get("/admin/edit/", [EditUsersController::class, "edit"], [AdminMiddleware::class]),
         Route::post("/admin/update/", [UpdateUsersController::class, "update"], [AdminMiddleware::class]),
-        Route::post("/admin/delete", [DeleteUsersController::class, "delete"], [AdminMiddleware::class]),
+        Route::post("/admin/delete", [DeleteUsersController::class, "delete"], [SuperAdminMiddleware::class]),
 
 
 

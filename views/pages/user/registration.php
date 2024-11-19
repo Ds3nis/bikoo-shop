@@ -6,7 +6,12 @@
  */
 ?>
 <?php
-$view->component("head");
+$view->component("head", [
+        'title' => "Bikoo|Registrace",
+    'bootstrap' => [
+        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    ]
+]);
 ?>
 <body>
 <div class="wrapper">
@@ -142,7 +147,7 @@ $view->component("head");
                                 <?php if($session->has("phone")) { ?>
                                     <div class="text-danger">
                                         <ul>
-                                            <?php foreach ($session->getFlash() as $error) { ?>
+                                            <?php foreach ($session->getFlash("phone") as $error) { ?>
                                                 <li style="color: red"><?php echo  $error ?></li>
                                             <?php  } ?>
                                         </ul>

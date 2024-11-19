@@ -71,6 +71,13 @@ class StoreContactsController extends Controller
             $mail->addAddress($smtpUsername);
 
 
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
 
             $mail->Subject = $email_subject;
             $mail->Body    = $email_body;
@@ -90,7 +97,6 @@ class StoreContactsController extends Controller
             $this->redirect("/contacts");
         } catch (Exception $e) {
             echo "error", "Při odesílání zprávy došlo k chybě: {$mail->ErrorInfo}";
-            $this->redirect("/contacts");
         }
     }
 }

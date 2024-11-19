@@ -13,10 +13,10 @@ var swiper = new Swiper(".mainSwiper", {
 var swiper = new Swiper(".bikeComing", {
     slidesPerView: 2,
     spaceBetween: 10,
-    autoplay: {
-        delay: 2500,
-        disableOnInteraction: false,
-    },
+    // autoplay: {
+    //     delay: 2500,
+    //     disableOnInteraction: false,
+    // },
     freeMode: true,
     navigation: {
         nextEl: ".bike-coming__next",

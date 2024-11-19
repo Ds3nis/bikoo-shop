@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const quantityInput = counter.querySelector('.quantity');
 
         const minValue = 1;
-        const maxValue = 15;
+        const maxValue = quantityInput.getAttribute("max");
 
         const validateQuantity = () => {
             let currentValue = parseInt(quantityInput.value);

@@ -46,11 +46,9 @@ $user = $auth->user();
                 </ul>
             </nav>
             <ul class="profile-menu header__profile">
-                <li class="profile-menu__item">
-                    <a class="profile-menu__link" href="#">
+                <li class="profile-menu__item search-item">
+                    <a class="profile-menu__link">
                         <svg
-                            width="19"
-                            height="18"
                             viewBox="0 0 19 18"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -116,8 +114,8 @@ $user = $auth->user();
             </ul>
         </div>
         <div class="header__btmsearch bottom-search">
-            <form class="bottom-search__search" action="#" method="post">
-                <input class="bottom-search__text" type="text" />
+            <form class="bottom-search__search" action="/catalog" method="get">
+                <input class="bottom-search__text" name="query" placeholder="Search..." type="text" />
                 <button
                     class="profile-menu__btn bottom-search__link btn-reset"
                     href="#"

@@ -2,6 +2,7 @@
 /**
  * @var \App\Kernel\View\View $view
  * @var array<\App\Models\User> $users
+ * @var \App\Kernel\Auth\AuthInterface $auth
  */
 ?>
 <?php
@@ -30,6 +31,32 @@ $view->include("main");
         <!-- Malé boxy (Stat box) -->
         <div class="row flex-column">
             <div class="col-1 mb-3">
+                <?php if ($auth->user()->role() < 3) { ?>
+                    <!-- Кнопка з повідомленням про відсутність доступу -->
+                    <button class="btn btn-block btn-danger" style="min-width: 150px" data-toggle="modal" data-target="#accessDeniedModal">
+                        Přidat
+                    </button>
+
+                    <!-- Модальне вікно для повідомлення про відсутність доступу -->
+                    <div class="modal fade" id="accessDeniedModal" tabindex="-1" role="dialog" aria-labelledby="accessDeniedLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="accessDeniedLabel">Upozornění</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Nemáte dostatečné oprávnění pro provedení této operace.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } else { ?>
                 <button class="btn btn-block btn-primary" style="min-width: 150px" data-toggle="modal" data-target="#exampleModal">Přidat
                 </button>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -147,6 +174,7 @@ $view->include("main");
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
 
 

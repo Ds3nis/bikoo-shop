@@ -94,6 +94,22 @@ abstract class Controller
         $this->redirect->to($url);
     }
 
+    public function abort($code = 404, $message = "Not Found")
+    {
+        http_response_code($code); // Встановлюємо HTTP-код відповіді
+
+        // Підключення кастомної сторінки
+        if ($code === 404) {
+            extract(["view" => $this->view]);
+            include APP_PATH . "/views/pages/notfound/404.php";
+        } else {
+            echo "<h1>Error $code</h1>";
+            echo "<p>$message</p>";
+        }
+
+        exit; // Завершуємо виконання скрипта
+    }
+
     private RequestInterface $request;
 
     public function validate(){

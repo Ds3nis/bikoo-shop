@@ -3,7 +3,9 @@
 namespace App\Controllers\Checkout;
 
 use App\Kernel\Controller\Controller;
+use App\Models\Product;
 use App\Services\OrderService;
+use App\Services\ProductService;
 
 class StoreCheckoutController extends Controller
 {
@@ -39,7 +41,8 @@ class StoreCheckoutController extends Controller
             $psc = $this->request()->input("psc");
             $street = $this->request()->input("street");
             $home = $this->request()->input("home");
-
+            $productsInOrder = $orderService->getOrderProducts($order_id);
+            $this->changeProductsCount($productsInOrder);
             $orderService->update($order_id, [
                 "cele_jmeno" => $fullName,
                 "telefon" => $phone,
@@ -50,9 +53,51 @@ class StoreCheckoutController extends Controller
                 "stav" => 1
             ]);
 
+
+
             $this->session()->remove("order_id");
+            $this->session()->remove("productCount");
 
             $this->redirect("/profile/orders");
+        }
+    }
+
+
+    /**
+     * @param array $productsInOrder
+     * @var Product $currentProduct
+     * @return void
+     * @throws \Exception
+     *
+     */
+    public function changeProductsCount(array $productsInOrder): void
+    {
+        $productService = new ProductService($this->db());
+
+        foreach ($productsInOrder as $product) {
+            $productId = $product["id_prvek_produkt"];
+            $quantityOrdered = $product["mnozstvi"];
+            $currentProduct = $productService->find($productId);
+
+            if ($currentProduct) {
+                $currentQuantity = $currentProduct->count();
+
+                if ($currentQuantity >= $quantityOrdered) {
+                    $newQuantity = $currentQuantity - $quantityOrdered;
+                    $updateData = ['mnozstvi' => $newQuantity];
+                    if ($newQuantity === 0) {
+                        $updateData['dostupnost'] = 0;
+                    }
+                    $productService->update($productId, $updateData);
+                } else {
+                    throw new \Exception(
+                        "Nedostatečné množství produktu ID {$productId} na skladě. 
+                    Skladem: {$currentQuantity} a objednáno: {$quantityOrdered}."
+                    );
+                }
+            } else {
+                throw new \Exception("ID produktu {$productId} nebylo nalezeno.");
+            }
         }
     }
 }

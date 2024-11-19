@@ -10,5 +10,5 @@ interface DatabaseInterface
     public function get(string $table, array $conditions = [], array $order = [], int $limit = -1, int $offset = 0) : ?array;
     public function first(string $table, array $conditions = []): ?array;
     public function isUnique(string $table, string $field, string $value) : bool;
-    public function update(string $table, array $data, array $conditions = []) : void;
+    public function update(string $table, array $data, array $conditions = []) : bool;
 }

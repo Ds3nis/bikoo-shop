@@ -108,7 +108,7 @@
 .form__link-pass {
 }
 .form__button {
-    margin: 17px 0px 28px 0px;
+    margin: 17px 0 28px 0;
     width: 100%;
     border: none;
 }
@@ -151,6 +151,18 @@
 
 .form__link-text span {
     text-decoration: underline;
+}
+
+.reset-password{
+    padding: 30px 50px;
+    max-width: 700px;
+    margin: 50px auto;
+    background-color: #f8f9fa; /* Світлий фон для читабельності */
+    border-radius: 10px; /* Згладжені краї */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легка тінь */
+    border: 1px solid #e0e0e0; /* Акуратна рамка */
+    font-family: 'Arial', sans-serif; /* Базовий шрифт */
+    color: #333; /* Темний текст для контрасту */
 }
 
 @media (max-width: 1155px) {
@@ -218,6 +230,6 @@
     }
 
     .form__button {
-        margin: 5px 0 5px 0px;
+        margin: 5px 0 5px 0;
     }
 }

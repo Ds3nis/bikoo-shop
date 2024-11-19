@@ -39,7 +39,7 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0px;
+    margin: 0;
     font-family: "Poppins", sans-serif;
 }
 
@@ -47,7 +47,7 @@ p,
 a,
 span {
     font-family: "Heebo", sans-serif;
-    margin: 0px;
+    margin: 0;
 }
 
 ul,
@@ -160,25 +160,19 @@ input {
     transform: translateY(10px);
 }
 
-.logo {
-svg {
+.logo svg{
     width: 110px;
     height: 50px;
     fill: #ea0129;
 }
-}
 
 .header__logo {
-svg {
     display: block;
-}
 }
 
 .nav {
 }
-.header__nav {
-    /* margin-left: 190px; */
-}
+
 .nav__list {
     display: flex;
     align-items: center;
@@ -226,15 +220,23 @@ svg {
 
 .header__profile {
 }
-.profile-menu__item {
+
+.profile-menu__item{
+    transition: transform 0.2s ease;
+    cursor: pointer;
 }
+
+.profile-menu__item:hover{
+    transform: scale(1.2);
+}
+
 .profile-menu__link {
     display: block;
+}
 
-svg {
+.profile-menu__link svg{
     width: 20px;
     height: 20px;
-}
 }
 
 .profile-menu__item:last-child .profile-menu__link {
@@ -268,8 +270,14 @@ svg {
 
 .header__btmsearch {
     display: none;
-    padding: 12px 0px 5px 0px;
+    padding: 0 0 5px 0;
+
 }
+
+.header__btmsearch.open {
+    display: block;
+}
+
 .bottom-search {
 }
 .bottom-search__search {
@@ -277,8 +285,7 @@ svg {
 }
 
 .bottom-search__text {
-    border: none;
-    outline: none;
+    border: 1px solid red;
     width: 100%;
     height: 50px;
     line-height: 30px;
@@ -286,11 +293,10 @@ svg {
     font-weight: 300;
     font-size: 18px;
     background-color: transparent;
-    padding-left: 30px;
     padding-right: 80px;
-    -webkit-box-shadow: 0px 1px 4px 0px #ddd;
-    -moz-box-shadow: 0px 1px 4px 0px #ddd;
-    box-shadow: 0px 1px 4px 0px #ddd;
+    -webkit-box-shadow: 0 1px 4px 0 #ddd;
+    -moz-box-shadow: 0 1px 4px 0 #ddd;
+    box-shadow: 0 1px 4px 0 #ddd;
     color: #ea0129;
 }
 
@@ -313,10 +319,8 @@ svg {
     justify-content: center;
 }
 
-.bottom-search__link {
-svg {
+.bottom-search__link svg {
     fill: #df0f2b;
-}
 }
 .btn-reset {
 }
@@ -497,7 +501,7 @@ svg {
 }
 
 .bike-coming__btns div {
-    transition: 0.5 ease all;
+    transition: all 0.5s ease;
 }
 
 .bike-coming__prev {
@@ -542,7 +546,7 @@ svg {
 }
 
 .product {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -556,7 +560,7 @@ svg {
 .product__img {
     width: 100%;
     height: 270px;
-    object-fit: cover;
+    object-fit: contain;
     position: relative;
 }
 
@@ -565,20 +569,18 @@ svg {
 /*    cursor: pointer;*/
 /*}*/
 
-.product:hover {
-    .product__title {
+.product:hover .product__title {
         color: #df0f2b;
-    }
+}
 
-    .product__view {
-        visibility: visible;
-        display: block;
-        transition: 0.5s;
-    }
+.product:hover .product__view{
+    visibility: visible;
+    display: block;
+    transition: 0.5s;
+}
 
-    .product__price {
-        color: #df0f2b;
-    }
+.product:hover .product__price{
+    color: #df0f2b;
 }
 
 /*.product__img {*/
@@ -598,6 +600,7 @@ svg {
     font-family: "Heebo", sans-serif;
     transition: all 0.5s;
     margin: 0;
+    text-align: center;
 }
 .product__dsc {
     font-size: 16px;
@@ -615,7 +618,7 @@ svg {
     z-index: 1;
     visibility: hidden;
     display: none;
-    transition: 0.5s;
+    transition: 0.5s all;
 }
 
 .cloud-btn ul li {
@@ -631,7 +634,7 @@ svg {
     line-height: 48px;
     overflow: hidden;
     z-index: 1;
-    transition: 0.5s;
+    transition: 0.5s all;
 }
 
 .cloud-btn__list {
@@ -728,7 +731,7 @@ svg {
     color: #fff;
     font-family: Heebo;
     font-size: 16px;
-    font-weight: 4s00;
+    font-weight: 400;
     line-height: 27px; /* 117.391% */
 }
 .et-in-touch__link {
@@ -766,7 +769,7 @@ svg {
 }
 .footer__bottom {
     background: #ea0129;
-    padding: 35px 0px 30px 0px;
+    padding: 35px 0 30px 0;
 }
 .copyright {
     display: flex;
@@ -812,7 +815,6 @@ svg {
         transition: all 0.5s;
         padding: 50px 30px 30px;
         overflow: auto;
-        overflow-y: auto;
         transform: translateX(-100%);
         min-width: 350px;
     }

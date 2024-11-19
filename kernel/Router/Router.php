@@ -39,7 +39,7 @@ class Router implements RouterInterface
 
 
     public function dispatch(string $uri, string $method){
-
+//        var_dump($this->session->getSession());
         $route = $this->findRoute($uri, $method);
 
 
@@ -90,7 +90,8 @@ class Router implements RouterInterface
     }
 
     private function notFound(){
-        echo "404 | not found";
+        extract(["view" => $this->view]);
+        include APP_PATH . "/views/pages/notfound/404.php";
     }
 
     private function findRoute(string $uri, string $method) : Route|false{

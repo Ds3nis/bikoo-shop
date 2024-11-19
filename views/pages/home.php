@@ -74,7 +74,7 @@
               <span class="bike-coming__tag coming-tag">Jízdní kola</span>
               <h2 class="bike-coming__title">Nadcházející 2024</h2>
               <p class="bike-coming__desc">
-Nová kola Monster v našem obchodě pro vás
+Nová kola v našem obchodě pro vás
 </p>
               <div class="bike-coming__btns">
                 <div class="bike-coming__prev"></div>
@@ -93,19 +93,16 @@ Nová kola Monster v našem obchodě pro vás
                         ?>
                       <img
                         class="product__img"
-                        src="<?php echo $imagesPath[0]?>"
-                        alt="<?php echo $newProduct->name() ?>"
+                        src="<?php echo $imagesPath[0]; ?>"
+                        alt="<?php echo $newProduct->name(); ?>"
                       />
                       <div class="product__description">
-                        <h3 class="product__title"><?php echo $newProduct->name() ?> </h3>
-                        <p class="product__dsc">
-                            <?php echo $newProduct->shortDescription() ?>
-                        </p>
+                        <h3 class="product__title"> <?php echo $newProduct->name() ?> </h3>
                         <a class="product__view cloud-btn" href="/catalog/product/?id=<?php echo $newProduct->id() ?>">
                           <nav>
                             <ul class="cloud-btn__list">
                               <li class="cloud-btn__item cloud-btn__item--red">
-PŘEHLED
+                                PŘEHLED
                                 <span></span>
                                 <span></span>
                                 <span></span>

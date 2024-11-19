@@ -101,7 +101,7 @@
                                                             src="<?php echo $imagesPath[0] ?>"
                                                             class="d-block ui-bordered mr-4"
                                                             alt=""
-                                                            style="width: 50%; height: 250px; object-fit: cover;"
+                                                            style="width: 50%; height: 250px; object-fit: contain;"
                                                     />
                                                     <div class="media-body">
                                                         <a href="/catalog/product/?id=<?php echo $product->id() ?>" class="d-block text-dark">
@@ -125,7 +125,8 @@
                                                                     value="<?php echo $product->countInOrder()?>"
                                                                     class="quantity"
                                                                     readonly=""
-                                                                    min="1"
+                                                                    min=1
+                                                                    max=<?php echo $product->count()?>
                                                             />
                                                             <button type="submit" name="action" value="increase" class="btn-reset plus-btn">+</button>
                                                         </div>

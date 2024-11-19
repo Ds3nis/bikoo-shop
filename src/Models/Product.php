@@ -21,7 +21,7 @@ class Product
     }
 
 
-    public function shortDescription($length = 100) {
+    public function shortDescription($length = 500) {
         return mb_strlen($this->description) > $length
             ? mb_substr($this->description, 0, $length) . '...'
             : $this->description;

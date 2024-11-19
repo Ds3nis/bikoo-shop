@@ -71,6 +71,10 @@ class Database implements DatabaseInterface
 
         $stmt->execute($conditions);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if($result == null){
+
+        }
+
 
         return $result ?: null;
     }
@@ -105,8 +109,21 @@ class Database implements DatabaseInterface
     {
         $where = '';
 
-        if(!empty($conditions)){
-            $where = 'WHERE ' . implode(" AND ", array_map(fn($field) => "$field = :$field", array_keys($conditions)));
+        if (!empty($conditions)) {
+            $whereClauses = [];
+            foreach ($conditions as $field => $condition) {
+                if (is_array($condition)) {
+                    // Підтримка, наприклад, ["nazev" => ["LIKE", "%search%"]]
+                    $operator = $condition[0];
+                    $value = $condition[1];
+                    $whereClauses[] = "$field $operator :$field";
+                    $conditions[$field] = $value;
+                } else {
+                    // Звичайне порівняння
+                    $whereClauses[] = "$field = :$field";
+                }
+            }
+            $where = 'WHERE ' . implode(" AND ", $whereClauses);
         }
 
 
@@ -158,7 +175,7 @@ class Database implements DatabaseInterface
         }
     }
 
-    public function update(string $table, array $data, array $conditions = []): void
+    public function update(string $table, array $data, array $conditions = []): bool
     {
         $fields = array_keys($data);
 
@@ -175,5 +192,7 @@ class Database implements DatabaseInterface
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute(array_merge($data, $conditions));
+
+        return $stmt->rowCount() > 0;
     }
 }

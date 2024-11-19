@@ -13,7 +13,7 @@ class UpdateProductsController extends Controller
         $product_id = $this->request()->input("product_id");
         $validation = $this->request()->validate([
             "title" => "string|required|min:2|max:200",
-            'image' => 'array|max:4048|mimes:png,jpg,svg,webp,jpeg',
+            'image' => 'array|max:6048|mimes:png,jpg,svg,webp,jpeg',
             "price" => "numeric|required|min:1",
             "is_available" => "numeric",
             "quantity" => "numeric|required",

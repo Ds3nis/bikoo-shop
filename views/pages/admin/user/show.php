@@ -2,6 +2,7 @@
 /**
  * @var \App\Kernel\View\View $view
  * @var \App\Models\User $user
+ * @var \App\Kernel\Auth\AuthInterface $auth
  */
 ?>
 <?php
@@ -34,10 +35,37 @@ $view->include("main");
                    class="btn btn-block btn-primary">Upravit</a>
             </div>
 
+            <?php if ($auth->user()->role() < 3) { ?>
+                <!-- Кнопка з повідомленням про відсутність доступу -->
+                <button class="btn btn-block btn-danger col-2 mb-3" style="min-width: 150px" data-toggle="modal" data-target="#accessDeniedModal">
+                    Smazat
+                </button>
+
+                <!-- Модальне вікно для повідомлення про відсутність доступу -->
+                <div class="modal fade" id="accessDeniedModal" tabindex="-1" role="dialog" aria-labelledby="accessDeniedLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="accessDeniedLabel">Upozornění</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Nemáte dostatečné oprávnění pro provedení této operace.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } else { ?>
             <form action="/admin/delete" class="col-2 mb-3" method="post">
                 <input type="hidden" name="user_id" value="<?php echo $user->id()?>">
                 <button type="submit" class="btn btn-block btn-danger">Smazat</button>
             </form>
+            <?php } ?>
             <div class="mt-1">
                 <?php $view->include("success-alert", [
                     "sessionKey" => "success"

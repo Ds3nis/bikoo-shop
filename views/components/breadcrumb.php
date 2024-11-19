@@ -2,7 +2,11 @@
     <div class="container breadcrumb__container">
         <div class="breadcrumb__content">
             <div class="breadcrumb__title">
-                <h1>Osobní účet</h1>
+                <?php if(!empty($title)) { ?>
+                    <h1><?php echo $title?></h1>
+                <?php }else { ?>
+                    <h1>Osobní účet</h1>
+                <?php } ?>
             </div>
             <ul class="breadcrumb__list">
                 <li class="breadcrumb__item">

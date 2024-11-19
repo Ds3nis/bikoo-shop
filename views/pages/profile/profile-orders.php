@@ -60,7 +60,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <h5>Informace o objednávce</h5>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-5">
                                                         <label for="">Jmeno</label>
                                                         <div class="border p-2"><?php echo $order->fullName() ?></div>
 <!--                                                        <label for="">E-mail</label>-->
@@ -95,7 +95,7 @@
                                                                     $imagesPath = array_filter($images);
                                                                     ?>
                                                                     <img
-                                                                        style="width: 150px; height: 150px; object-fit:cover;"
+                                                                        style=" object-fit:contain;"
                                                                         src="<?php echo $imagesPath[0] ?>"
                                                                         alt="<?php echo $product->name() ?>"
                                                                     />

@@ -12,7 +12,7 @@ class StoreRegistrationController extends Controller
         $validate = $this->request()->validate([
            "name" => "required|min:3|max:45",
             "last_name" => "required|min:3|max:45",
-            "email" => "required|email|unique:zakaznik|max:100",
+            "email" => "required|email|unique:zakaznik,email|max:100",
             "password" => "required|min:1",
             "password_confirmation" => "required|min:1|password_confirm:password",
             "phone" => "required|min:12|maxNumeric:12"

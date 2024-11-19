@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\Kernel\View\View $view
+ * @var \App\Kernel\Auth\AuthInterface $auth
  */
 ?>
 <!DOCTYPE html>
@@ -100,7 +101,11 @@
                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Admin</a>
+                <?php if($auth->user()->role() > 2) {?>
+                <a href="/profile" class="d-block">Super Admin</a>
+                <?php }else { ?>
+                <a href="/profile" class="d-block">Admin</a>
+                <?php } ?>
             </div>
         </div>
 
