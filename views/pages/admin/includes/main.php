@@ -117,6 +117,17 @@
                     data-accordion="false" style="">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
+
+                    <li class="nav-item">
+                        <a href="/admin/orders" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-bag" style="color: #ffffff;"></i>
+                        <p style="color: white">
+                            Objednávky
+                            <span class="badge badge-info right"></span>
+                        </p>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a href="admin/products" class="nav-link">
                         <i class="nav-icon fas fa-bicycle " style="color: #ffffff;"></i>

@@ -22,7 +22,16 @@
 <div class="wrapper">
     <?php $view->component("header") ?>
     <main class="main">
-        <?php $view->component("breadcrumb") ?>
+        <?php $view->component("breadcrumb", [
+            "title" => "Stránka produktu",
+            "image" => "",
+            "links" => [
+                [
+                    "title" => $product->name(),
+                    "link" => '/catalog/product/?id=' . $product->id()
+                ]
+            ]
+        ]) ?>
         <section class="product-details">
             <div class="container product-details__container">
                 <?php $view->component("success", [

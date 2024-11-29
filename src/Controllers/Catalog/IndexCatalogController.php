@@ -14,7 +14,7 @@ class IndexCatalogController extends Controller
         $sortBy = $this->request()->input("sort_by");
         $query = $this->request()->input("query");
         $page = $this->request()->input("page") ?? 1;
-        $perPage = 1;
+        $perPage = 6;
 
         $conditions = [];
         if (!empty($available)) {
@@ -23,6 +23,7 @@ class IndexCatalogController extends Controller
 
         // Додаємо пошук за назвою товару
         if (isset($query) && !empty($query)) {
+            $query = htmlspecialchars($query);
             $conditions["nazev"] = ["LIKE", "%" . $query . "%"];
         }
 

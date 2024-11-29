@@ -105,7 +105,7 @@ class Database implements DatabaseInterface
 
     }
 
-    public function get(string $table, array $conditions = [], array $order = [], int $limit = -1, int $offset = 0): ?array
+    public function get(string $table, array $conditions = [], array $order = [], int $limit = -1, int $offset = 0, string $separator = "AND"): ?array
     {
         $where = '';
 
@@ -123,7 +123,7 @@ class Database implements DatabaseInterface
                     $whereClauses[] = "$field = :$field";
                 }
             }
-            $where = 'WHERE ' . implode(" AND ", $whereClauses);
+            $where = 'WHERE ' . implode(" {$separator} ", $whereClauses);
         }
 
 
@@ -146,6 +146,59 @@ class Database implements DatabaseInterface
         $stmt->execute($conditions);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function getSpecial(string $table, array $conditions): ?array
+    {
+        $whereClauses = [];
+        $orClauses = [];
+        $params = [];
+
+        foreach ($conditions as $field => $condition) {
+            if (is_array($condition)) {
+                // Наприклад, ["nazev" => ["LIKE", "%search%"]] або ["nazev" => ["LIKE", "%search%", "OR"]]
+                $operator = $condition[0];
+                $value = $condition[1];
+                $logicalSeparator = $condition[2] ?? "AND"; // За замовчуванням "AND"
+
+                if (strtoupper($logicalSeparator) === "OR") {
+                    $orClauses[] = "$field $operator :$field";
+                } else {
+                    $whereClauses[] = "$field $operator :$field";
+                }
+
+                $params[$field] = $value;
+            } else {
+                $whereClauses[] = "$field = :$field";
+                $params[$field] = $condition;
+            }
+        }
+
+
+        $orPart = '';
+        if (!empty($orClauses)) {
+            $orPart = '(' . implode(' OR ', $orClauses) . ')';
+        }
+
+        $wherePart = implode(' AND ', $whereClauses);
+        if ($wherePart && $orPart) {
+            $wherePart .= " AND $orPart";
+        } elseif ($orPart) {
+            $wherePart = $orPart;
+        }
+
+        $where = $wherePart ? "WHERE $wherePart" : '';
+
+        $sql = "SELECT * FROM $table $where";
+
+
+
+        $stmt = $this->pdo->prepare($sql);
+        $isSelected = $stmt->execute($params);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
+
 
     public function delete(string $table, array $conditions = []){
 
@@ -195,4 +248,6 @@ class Database implements DatabaseInterface
 
         return $stmt->rowCount() > 0;
     }
+
+
 }

@@ -22,7 +22,8 @@ class Router implements RouterInterface
 
     private array $routes = [
         "GET" => [],
-        "POST" => []
+        "POST" => [],
+        "DELETE" => [],
     ];
     public function __construct(
         private ViewInterface $view,
@@ -41,7 +42,6 @@ class Router implements RouterInterface
     public function dispatch(string $uri, string $method){
 //        var_dump($this->session->getSession());
         $route = $this->findRoute($uri, $method);
-
 
 
 
@@ -89,9 +89,18 @@ class Router implements RouterInterface
 
     }
 
-    private function notFound(){
-        extract(["view" => $this->view]);
-        include APP_PATH . "/views/pages/notfound/404.php";
+    private function notFound($code = 404, $message = "Not Found"){
+        http_response_code($code); // Встановлюємо HTTP-код відповіді
+
+        if ($code === 404) {
+            extract(["view" => $this->view]);
+            include APP_PATH . "/views/pages/notfound/404.php";
+        } else {
+            echo "<h1>Error $code</h1>";
+            echo "<p>$message</p>";
+        }
+        exit;
+
     }
 
     private function findRoute(string $uri, string $method) : Route|false{

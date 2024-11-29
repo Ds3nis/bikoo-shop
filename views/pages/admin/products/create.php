@@ -5,8 +5,6 @@
  */
 ?>
 <?php
-session_start();
-//dd($session);
 $view->include("main");
 ?>
 <div class="content-header">

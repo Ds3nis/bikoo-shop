@@ -33,7 +33,7 @@ class DeleteProductsController extends Controller
                 $this->session()->set("failed", "Při vymazání produktu z databáze došlo k chybě");
             }
         } else {
-            $this->session()->set("failed", "Produkt не знайдено.");
+            $this->session()->set("failed", "Produkt nebyl nalezen.");
         }
 
         return $this->redirect("/admin/products");

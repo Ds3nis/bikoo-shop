@@ -44,6 +44,10 @@ use App\Controllers\User\ForgotPass\StoreForgotPassController;
 use App\Controllers\User\ForgotPass\IndexResetPassController;
 use App\Controllers\User\ForgotPass\UpdateForgotPassController;
 use App\Middleware\SuperAdminMiddleware;
+use App\Controllers\About\IndexAboutController;
+use App\Controllers\Admin\Order\IndexOrdersController;
+use App\Controllers\Admin\Order\ShowOrdersController;
+use App\Controllers\Admin\Order\DeleteOrdersController;
 
 return [
         Route::get("/", [IndexController::class, "index"]),
@@ -65,6 +69,7 @@ return [
 
         Route::get("/contacts", [IndexContactsController::class,"index"]),
         Route::post("/contacts", [StoreContactsController::class,"store"]),
+        Route::get("/about", [IndexAboutController::class, "index"]),
         Route::get("/shopping-cart",[IndexCartController::class, "index"]),
         Route::post("/shopping-cart/add",[StoreCartController::class, "store"], [AuthMiddleware::class]),
         Route::post("/shopping-cart/remove", [UpdateCartController::class, "remove"], [AuthMiddleware::class]),
@@ -100,6 +105,12 @@ return [
         Route::get("/admin/edit/", [EditUsersController::class, "edit"], [AdminMiddleware::class]),
         Route::post("/admin/update/", [UpdateUsersController::class, "update"], [AdminMiddleware::class]),
         Route::post("/admin/delete", [DeleteUsersController::class, "delete"], [SuperAdminMiddleware::class]),
+
+
+        Route::get("/admin/orders", [IndexOrdersController::class, "index"], [AdminMiddleware::class]),
+        Route::post("/admin/orders", [IndexOrdersController::class, "search"], [AdminMiddleware::class]),
+        Route::get("/admin/orders/", [ShowOrdersController::class, "show"], [AdminMiddleware::class]),
+        Route::delete("/admin/orders/delete", [DeleteOrdersController::class, "delete"], [AdminMiddleware::class]),
 
 
 

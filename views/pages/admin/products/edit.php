@@ -2,6 +2,7 @@
 /**
  * @var \App\Kernel\View\View $view
  * @var \App\Models\Product $product
+ * @var \App\Kernel\Session\SessionInterface $session
  */
 ?>
 <?php
@@ -44,7 +45,16 @@ $view->include("main");
                                       placeholder="Zadejte název" style="resize: none;"><?php echo $product->name()?>
                             </textarea>
 
-                            <div class="text-danger">{{$message}}</div>
+
+                            <?php if($session->has("title")) { ?>
+                                <div class="text-danger">
+                                    <ul>
+                                        <?php foreach ($session->getFlash("title") as $error) { ?>
+                                            <li style="color: red"><?php echo  $error ?></li>
+                                        <?php  } ?>
+                                    </ul>
+                                </div>
+                            <?php  }?>
 
                         </div>
                     </div>
@@ -77,7 +87,15 @@ $view->include("main");
 
                         </ul>
 
-                        <span class="text-danger">{{ $message }} </span>
+                        <?php if($session->has("image")) { ?>
+                            <div class="text-danger">
+                                <ul>
+                                    <?php foreach ($session->getFlash("image") as $error) { ?>
+                                        <li style="color: red"><?php echo  $error ?></li>
+                                    <?php  } ?>
+                                </ul>
+                            </div>
+                        <?php  }?>
 
                     </div>
                     <div class="form-group">
@@ -86,7 +104,15 @@ $view->include("main");
                                placeholder="Zadejte cenu"
                                value="<?php echo $product->price()?>">
 
-                        <div class="text-danger">{{$message}}</div>
+                        <?php if($session->has("price")) { ?>
+                            <div class="text-danger">
+                                <ul>
+                                    <?php foreach ($session->getFlash("price") as $error) { ?>
+                                        <li style="color: red"><?php echo  $error ?></li>
+                                    <?php  } ?>
+                                </ul>
+                            </div>
+                        <?php  }?>
 
                     </div>
                     <div class="form-group">
@@ -98,7 +124,15 @@ $view->include("main");
                             </option>
                         </select>
 
-                        <div class="text-danger">{{$message}}</div>
+                        <?php if($session->has("is_available")) { ?>
+                            <div class="text-danger">
+                                <ul>
+                                    <?php foreach ($session->getFlash("is_available") as $error) { ?>
+                                        <li style="color: red"><?php echo  $error ?></li>
+                                    <?php  } ?>
+                                </ul>
+                            </div>
+                        <?php  }?>
 
                     </div>
                     <div class="form-group">
@@ -107,14 +141,30 @@ $view->include("main");
                                placeholder="Zadejte množství"
                                value="<?php echo $product->count()?>">
 
-                        <div class="text-danger">{{$message}}</div>
+                        <?php if($session->has("quantity")) { ?>
+                            <div class="text-danger">
+                                <ul>
+                                    <?php foreach ($session->getFlash("quantity") as $error) { ?>
+                                        <li style="color: red"><?php echo  $error ?></li>
+                                    <?php  } ?>
+                                </ul>
+                            </div>
+                        <?php  }?>
 
                     </div>
                     <div class="form-group">
                         <label for="summernote">Změnit popis</label>
                         <textarea name="description"
                                   id="summernote"><?php echo $product->description() ?></textarea>
-                        <div class="text-danger">{{$message}}</div>
+                        <?php if($session->has("description")) { ?>
+                            <div class="text-danger">
+                                <ul>
+                                    <?php foreach ($session->getFlash("description") as $error) { ?>
+                                        <li style="color: red"><?php echo  $error ?></li>
+                                    <?php  } ?>
+                                </ul>
+                            </div>
+                        <?php  }?>
                     </div>
                     <div class="card">
                         <button type="submit" class="btn btn-primary">Uložit změny</button>

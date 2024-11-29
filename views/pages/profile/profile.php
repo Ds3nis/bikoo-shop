@@ -23,7 +23,16 @@
 <div class="wrapper">
     <?php $view->component("header") ?>
     <main class="main">
-      <?php $view->component("breadcrumb") ?>
+        <?php $view->component("breadcrumb", [
+            "title" => "Osobní účet",
+            "image" => "breadcrumb-banner--profile",
+            "links" => [
+                [
+                    "title" => "Osobní údaje",
+                    "link" => "/profile"
+                ]
+            ]
+        ]); ?>
         <section class="profile">
             <div class="container profile__container">
                 <div class="office">
@@ -145,20 +154,20 @@
                                         </div>
                                     <?php  }?>
                                 </div>
-                                <div class="input-group">
-                                  <label class="label">Dodací adresa</label>
-                                  <input
-                                    autocomplete="off"
-                                    disabled
-                                    name="address"
-                                    value=""
-                                    class="input"
-                                    type="text"
-                                  />
-                                  <div></div>
-
-                                  <div class="text-danger"></div>
-                                </div>
+<!--                                <div class="input-group">-->
+<!--                                  <label class="label">Dodací adresa</label>-->
+<!--                                  <input-->
+<!--                                    autocomplete="off"-->
+<!--                                    disabled-->
+<!--                                    name="address"-->
+<!--                                    value=""-->
+<!--                                    class="input"-->
+<!--                                    type="text"-->
+<!--                                  />-->
+<!--                                  <div></div>-->
+<!---->
+<!--                                  <div class="text-danger"></div>-->
+<!--                                </div>-->
                               </div>
                               <button class="form__button_edit" id="edit" type="button">
                                 Upravit

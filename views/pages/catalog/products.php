@@ -6,6 +6,7 @@
  * @var \App\Kernel\Auth\AuthInterface $auth
  * @var array<\App\Models\Product> $products
  * @var string $pagination
+ * @var string $query
  */
 
 ?>
@@ -27,11 +28,26 @@
             "activeMenu" => "katalog"
     ]); ?>
     <main class="main">
-        <?php $view->component("breadcrumb", [
-                "title" => "Jízdní kola"
-        ]); ?>
+        <?php
+        $data = [
+                "title" => "Jízdní kola",
+                "image" => "breadcrumb-banner--products",
+                "links" => [
+                [
+                    "title" => "KATALOG",
+                    "link" => "/catalog"
+                ],
+            ]
+        ];
+        if (!empty($query)) {
+            $data["links"][] = [
+                "title" => $query
+            ];
+        }
+        $view->component("breadcrumb", $data); ?>
         <section class="catalog-grid">
             <div class="container catalog-grid__container">
+                <?php if (isset($products) && !empty($products)) { ?>
                 <div class="catalog-grid__props catalog-props">
                     <div class="catalog-props__top">
                         <div class="catalog-props__available">
@@ -46,6 +62,9 @@
 
                                 if (isset($_GET['sort_by'])) {
                                     echo '<input type="hidden" name="sort_by" value="' . htmlspecialchars($_GET['sort_by']) . '">';
+                                }
+                                if (isset($_GET["query"])){
+                                    echo '<input type="hidden" name="query" value="' . htmlspecialchars($_GET['query']) . '">';
                                 }
                                 ?>
                             </form>
@@ -62,6 +81,9 @@
                             <?php
                             if (isset($_GET['available'])) {
                                 echo '<input type="hidden" name="available" value="1">';
+                            }
+                            if (isset($_GET["query"])){
+                                echo '<input type="hidden" name="query" value="' . htmlspecialchars($_GET['query']) . '">';
                             }
                             ?>
                         </form>
@@ -139,6 +161,15 @@
                 <div class="catalog-grid__pagination pagination">
                     <?php echo $pagination?>
                 </div>
+                <?php }else{ ?>
+                    <div class="catalog-grid__props catalog-props">
+                        <div class="catalog-props__top">
+                            <p class="catalog-grid__nothing">
+                                Pro vaše vyhledávání nebylo nic nalezeno
+                            </p>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
         </section>
     </main>

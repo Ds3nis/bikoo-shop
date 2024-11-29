@@ -11,8 +11,18 @@ public function delete(){
     $service = new UserService($this->db());
 
     $user_id = $this->request()->input("user_id");
-
+    dd($user_id);
     $user = $service->find($user_id);
+
+    if ($user_id == $this->auth()->user()->getId()){
+        $this->auth()->logout();
+        if (!is_null($this->session()->get("order_id"))){
+            $this->session()->remove("order_id");
+        }
+        if (!is_null($this->session()->get("productCount"))){
+            $this->session()->remove("productCount");
+        }
+    }
 
     $verify = $service->delete([
         "id" => $user_id

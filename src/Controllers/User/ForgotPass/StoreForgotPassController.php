@@ -40,7 +40,6 @@ class StoreForgotPassController extends Controller
 
         if ($update){
             $this->sendEmail($token, $toEmail);
-
         }
         $this->session()->set("sent-success", "Byl odeslán odkaz pro obnovení hesla ");
         $this->redirect("/forgot-password");

@@ -18,6 +18,7 @@
 </div>
 <!-- ./wrapper -->
 <script src="assets/js/file-images.js"></script>
+<script src="assets/js/sendRequest.js"></script>
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

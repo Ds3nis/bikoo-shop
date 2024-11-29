@@ -19,26 +19,16 @@
             "activeMenu" => "kontakty"
     ]) ?>
     <main class="main">
-        <section class="breadcrumb-banner breadcrumb-banner--contacts">
-            <div class="container breadcrumb__container">
-                <div class="breadcrumb__content">
-                    <div class="breadcrumb__title">
-                        <h1>Kontakty</h1>
-                    </div>
-                    <ul class="breadcrumb__list">
-                        <li class="breadcrumb__item">
-                            <a class="breadcrumb__link" href="#">Hlavní</a>
-                        </li>
-                        <li class="breadcrumb__list">
-                            <span class="spacer"> // </span>
-                        </li>
-                        <li class="breadcrumb__item">
-                            <a class="breadcrumb__link" href="#">Kontakty</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <?php $view->component("breadcrumb", [
+            "title" => "KONTAKTY",
+            "image" => "",
+            "links" => [
+                [
+                    "title" => "KONTAKTY",
+                    "link" => "/contacts"
+                ]
+            ]
+        ]); ?>
         <section class="contacts">
             <div class="container contacts__container">
                 <div class="contacts__row contact">

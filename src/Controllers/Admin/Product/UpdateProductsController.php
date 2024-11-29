@@ -20,6 +20,8 @@ class UpdateProductsController extends Controller
             "description" => "string|required",
         ]);
 
+//        dd($this->request()->file("image"),$this->request()->input("hidden"));
+
         if (!$validation) {
             $errors = $this->request()->errors();
             foreach ($errors as $field => $error) {

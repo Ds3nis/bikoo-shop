@@ -22,26 +22,16 @@
 <div class="wrapper">
     <?php $view->component("header") ?>
     <main class="main">
-        <section class="breadcrumb-banner breadcrumb-banner--cart">
-            <div class="container breadcrumb__container">
-                <div class="breadcrumb__content">
-                    <div class="breadcrumb__title">
-                        <h1>Zobrazit košík</h1>
-                    </div>
-                    <ul class="breadcrumb__list">
-                        <li class="breadcrumb__item">
-                            <a class="breadcrumb__link" href="#">Hlavní</a>
-                        </li>
-                        <li class="breadcrumb__list">
-                            <span class="spacer"> // </span>
-                        </li>
-                        <li class="breadcrumb__item">
-                            <a class="breadcrumb__link" href="#">Zobrazit košík</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <?php $view->component("breadcrumb", [
+            "title" => "Zobrazit košík",
+            "image" => "breadcrumb-banner--cart",
+            "links" => [
+                [
+                    "title" => "košík",
+                    "link" => "/shopping-cart"
+                ]
+            ]
+        ]); ?>
         <section class="shopping-cart">
             <div class="container cart__container">
                 <div class="container px-3 my-5 clearfix">

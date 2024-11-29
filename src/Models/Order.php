@@ -30,6 +30,23 @@ class Order
         return $this->price;
     }
 
+    public function toArray()
+    {
+        return [
+            'id' => $this->id(),
+            'id_zakaznik' => $this->userId(),
+            'cele_jmeno' => $this->fullName(),
+            'telefon' => $this->phone(),
+            'mesto' => $this->city(),
+            'psc' => $this->psc(),
+            'ulice' => $this->street(),
+            'cislo_domu' => $this->homeNumber(),
+            'stav' => $this->status(),
+            'cena' => $this->price(),
+            'datum' => $this->date(),
+        ];
+    }
+
     /**
      * @return int
      */

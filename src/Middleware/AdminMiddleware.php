@@ -9,7 +9,7 @@ class AdminMiddleware extends AbstractMiddleware
     public function handle(): void
     {
         if (!$this->auth->check()){
-            $this->redirect->to("/");
+            $this->redirect->to("/authorisation");
         }elseif ($this->auth->check() && $this->auth->user()->role() < 2){
             $this->redirect->to("/");
         }

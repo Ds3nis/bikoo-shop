@@ -192,6 +192,13 @@
   justify-content: center;
 }
 
+.catalog-grid__nothing{
+  text-align: center;
+  margin: 0 auto;
+  font-size: 26px;
+
+}
+
 @media (max-width: 962px) {
   .catalog-list__item {
     width: 32.5%;

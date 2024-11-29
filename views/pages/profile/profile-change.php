@@ -18,7 +18,16 @@
 <div class="wrapper">
     <?php $view->component("header") ?>
     <main class="main">
-        <?php $view->component("breadcrumb") ?>
+        <?php $view->component("breadcrumb", [
+            "title" => "Osobní účet",
+            "image" => "breadcrumb-banner--profile",
+            "links" => [
+                [
+                    "title" => "Změna hesla",
+                    "link" => "/profile/change/password"
+                ]
+            ]
+        ]); ?>
         <section class="profile">
             <div class="container profile__container">
                 <div class="office">

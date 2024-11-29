@@ -16,7 +16,7 @@ class StoreProductsController extends Controller
         $validation = $this->request()->validate([
             "title" => "string|required|min:2|max:200",
             "code" => "numeric|required|min:1|maxNumeric:10|unique:produkt,kod",
-            'image' => 'array|required|max:4048|mimes:png,jpg,svg,webp,jpeg',
+            'image' => 'array|required|max:4048|mimes:png,jpg,svg,webp,jpeg,jfif',
             "price" => "numeric|required|min:1",
             "is_available" => "numeric",
             "quantity" => "numeric|required",

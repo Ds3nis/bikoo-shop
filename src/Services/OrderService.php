@@ -17,8 +17,8 @@ class OrderService
      * @return array<Order>
      *
      */
-    public function all() : array{
-        $orders = $this->db->get("objednavka_obchodu");
+    public function all(array $data = []) : array{
+        $orders = $this->db->get("objednavka_obchodu", $data);
         $orders =  array_map(function ($order) {
             return new Order(
                 $order["id"],
@@ -34,6 +34,28 @@ class OrderService
                 $order["datum"],
             );
         }, $orders);
+
+        return  $orders;
+    }
+
+    public function getOrdersStatus(array $data, string $separator = "AND") : array{
+        $orders = $this->db->getSpecial("objednavka_obchodu", $data);
+
+         $orders =  array_map(function ($order) {
+             return new Order(
+                 $order["id"],
+                 $order["id_zakaznik"],
+                 $order["cele_jmeno"],
+                 $order["telefon"],
+                 $order["mesto"],
+                 $order["psc"],
+                 $order["ulice"],
+                 $order["cislo_domu"],
+                 $order["stav"],
+                 $order["cena"],
+                 $order["datum"],
+             );
+         }, $orders);
 
         return  $orders;
     }

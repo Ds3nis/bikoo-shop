@@ -12,6 +12,11 @@ class Route
         return new static($uri, "GET", $action, $middlewares);
     }
 
+    public static function delete(string $uri, $action, array $middlewares = []) :static {
+        return new static($uri, "DELETE", $action, $middlewares);
+    }
+
+
     public static function post(string $uri, $action, array $middlewares = []) : static{
         return new static($uri, "POST", $action, $middlewares);
     }

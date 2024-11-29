@@ -58,6 +58,9 @@ class Pagination
 
     public function getHtml() : string
     {
+        if ($this->count_pages == 1){
+            return "";
+        }
         $back = '';
         $forward = '';
         $pages = '';
